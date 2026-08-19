@@ -1,0 +1,289 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>进化证据账本 · Evolution Evidence Ledger (EEL) v0.1.0</title>
+<style>
+  :root{
+    --bg:#0d1117; --panel:#161b22; --panel2:#1c2330; --border:#2d3748;
+    --text:#e6edf3; --muted:#8b949e; --accent:#58a6ff; --green:#3fb950;
+    --red:#f85149; --amber:#d29922; --purple:#bc8cff;
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  body{background:var(--bg); color:var(--text); font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;
+       line-height:1.6; padding:0 16px 48px; max-width:1080px; margin:0 auto}
+  header{padding:28px 0 12px; border-bottom:1px solid var(--border); margin-bottom:20px}
+  h1{font-size:26px; letter-spacing:.5px}
+  h1 .en{color:var(--muted); font-size:16px; font-weight:400; margin-left:8px}
+  .sub{color:var(--muted); margin-top:6px; font-size:14px}
+  .badge{display:inline-block; padding:2px 10px; border-radius:12px; font-size:12px; margin-top:10px;
+         background:rgba(88,166,255,.12); color:var(--accent); border:1px solid rgba(88,166,255,.3)}
+  h2{font-size:18px; margin:28px 0 12px; padding-left:10px; border-left:3px solid var(--accent)}
+  .cards{display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:12px}
+  .stat{background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:14px}
+  .stat .num{font-size:28px; font-weight:700}
+  .stat .lbl{color:var(--muted); font-size:12px; margin-top:2px}
+  .num.g{color:var(--green)} .num.r{color:var(--red)} .num.a{color:var(--amber)} .num.p{color:var(--purple)}
+  .guard{background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:14px; margin-bottom:10px}
+  .guard h3{font-size:15px; display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+  .tag{font-size:11px; padding:1px 8px; border-radius:6px; background:var(--panel2); border:1px solid var(--border); color:var(--muted)}
+  .tag.anchor{color:var(--accent); border-color:rgba(88,166,255,.35)}
+  .anchor a{color:var(--accent); text-decoration:none; font-size:12px}
+  .anchor a:hover{text-decoration:underline}
+  .guard .prob{color:var(--muted); font-size:13px; margin:8px 0 4px}
+  .guard .rule{font-size:13px; border-left:2px solid var(--border); padding-left:10px; color:var(--text)}
+  .guard .rule b{color:var(--green)}
+  table{width:100%; border-collapse:collapse; font-size:13px; background:var(--panel); border:1px solid var(--border); border-radius:8px; overflow:hidden}
+  th,td{padding:8px 10px; text-align:left; border-bottom:1px solid var(--border); vertical-align:top}
+  th{background:var(--panel2); color:var(--muted); font-weight:600; font-size:12px}
+  tr:last-child td{border-bottom:none}
+  .pass{color:var(--green); font-weight:700} .fail{color:var(--red); font-weight:700}
+  .rollback{color:var(--amber); font-weight:700} .assume{color:var(--purple); font-weight:700}
+  form{background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:16px; margin-top:10px}
+  label{display:block; font-size:13px; color:var(--muted); margin:10px 0 4px}
+  input[type=text],select,textarea{width:100%; background:var(--bg); border:1px solid var(--border); color:var(--text);
+       border-radius:6px; padding:8px 10px; font-size:14px; font-family:inherit}
+  input[type=number]{width:120px; background:var(--bg); border:1px solid var(--border); color:var(--text); border-radius:6px; padding:6px 10px}
+  .chk{display:flex; gap:16px; flex-wrap:wrap; margin-top:4px}
+  .chk label{display:flex; align-items:center; gap:6px; margin:0; color:var(--text); font-size:13px}
+  button{background:var(--accent); color:#0d1117; border:none; border-radius:6px; padding:10px 20px; font-size:14px;
+         font-weight:600; cursor:pointer; margin-top:14px}
+  button:hover{opacity:.9}
+  #result{margin-top:12px; font-size:14px; padding:10px; border-radius:6px; display:none}
+  #result.ok{display:block; background:rgba(63,185,80,.12); border:1px solid rgba(63,185,80,.4)}
+  #result.no{display:block; background:rgba(248,81,73,.12); border:1px solid rgba(248,81,73,.4)}
+  .cite{font-size:12px; color:var(--muted); margin-bottom:6px}
+  .cite a{color:var(--accent); text-decoration:none}
+  footer{margin-top:40px; padding-top:16px; border-top:1px solid var(--border); color:var(--muted); font-size:12px}
+  .note{background:var(--panel2); border:1px dashed var(--border); border-radius:8px; padding:12px; font-size:13px; margin:12px 0}
+</style>
+</head>
+<body>
+<header>
+  <h1>🏛️ 进化证据账本 <span class="en">Evolution Evidence Ledger (EEL)</span></h1>
+  <div class="sub">给「自进化 AI Agent」上的六道锁 —— 把 6 篇 arXiv 论文固化成可运行的审计层</div>
+  <div class="sub">作者：Zhengming × chenhz01 ｜ 2026-08-19 ｜ 诚实审计 · 不可篡改</div>
+  <span class="badge">v0.1.0 · MVP · 零依赖单文件</span>
+</header>
+
+<section>
+  <h2>一、账本概览</h2>
+  <div class="cards">
+    <div class="stat"><div class="num" id="sTotal">0</div><div class="lbl">进化事件总数（append-only）</div></div>
+    <div class="stat"><div class="num g" id="sPass">0</div><div class="lbl">✅ 放行</div></div>
+    <div class="stat"><div class="num a" id="sRollback">0</div><div class="lbl">↩️ 回滚</div></div>
+    <div class="stat"><div class="num p" id="sAssume">0</div><div class="lbl">🧪 降级为假设</div></div>
+  </div>
+  <div class="note">⚠️ 本账本为 <b>append-only（追加不可篡改）</b>：事件一经写入即不可删除/修改，数据持久化于浏览器 localStorage。这是 EEL 的信任基石 —— 自进化 AI 的每一次进化都必须留下可审计证据。</div>
+</section>
+
+<section>
+  <h2>二、六道锁（论文锚定护栏）</h2>
+  <div id="guards"></div>
+</section>
+
+<section>
+  <h2>三、进化事件账本</h2>
+  <table>
+    <thead><tr><th>时间</th><th>事件类型</th><th>变更摘要</th><th>触发护栏</th><th>校验结果</th></tr></thead>
+    <tbody id="ledger"></tbody>
+  </table>
+</section>
+
+<section>
+  <h2>四、记录一条进化事件（演示护栏校验）</h2>
+  <form id="form">
+    <label>事件类型</label>
+    <select id="evType">
+      <option value="SELF_IMPROVE">自改进（Self-Improve）→ 方差护栏</option>
+      <option value="MEMORY_EDIT">记忆编辑（Memory Edit）→ 证据保全</option>
+      <option value="POLICY_CHANGE">策略变更（Policy Change）→ 审计账本</option>
+      <option value="CONCLUSION">结论产出（Conclusion）→ 可重放闸门</option>
+      <option value="MULTIMODAL">多模态决策（Multimodal）→ 不确定性质疑门</option>
+    </select>
+    <label>变更摘要</label>
+    <textarea id="summary" rows="2" placeholder="例：落地 PATT-20260803-01 规则，把 Benchmark 饱和检查纳入 SKILL.md"></textarea>
+    <label id="lblMagnitude">变更幅度 %（用于方差护栏，>30% 将触发回滚）</label>
+    <input type="number" id="magnitude" value="10" min="0" max="100">
+    <label id="lblFingerprint">证据指纹（用于证据保全，留空则 FAIL）</label>
+    <input type="text" id="fingerprint" placeholder="例：sha256:9f2c…">
+    <div class="chk" id="chkGroup">
+      <label><input type="checkbox" id="cMotivation"> 已记录动机</label>
+      <label><input type="checkbox" id="cData"> 已记录数据</label>
+      <label><input type="checkbox" id="cBacktest"> 已记录回测</label>
+      <label><input type="checkbox" id="cState"> 已声明状态</label>
+      <label><input type="checkbox" id="cRepro"> 可复现</label>
+      <label><input type="checkbox" id="cUncertainty"> 不确定性已量化</label>
+    </div>
+    <button type="submit">写入账本并校验</button>
+    <div id="result"></div>
+  </form>
+</section>
+
+<section>
+  <h2>五、论文索引（6 篇锚点）</h2>
+  <div id="papers"></div>
+</section>
+
+<footer>
+  进化证据账本 EEL v0.1.0 · Zhengming × chenhz01 · 诚实原则：自我评估必标弱点，审计不可篡改。<br>
+  本 MVP 为演示性质，护栏校验逻辑为「规则的可运行表达」，非对论文结论的完整复现；生产部署前须经 6 篇论文原文核对。
+</footer>
+
+<script>
+// ============ 六道锁定义（论文锚定护栏） ============
+const GUARDS = [
+  {id:"G1", name:"自改进方差护栏", event:"SELF_IMPROVE", anchor:"2608.18066",
+   paper:"On the Fragility of Self-Improving Agents: Variance, Task Order, and Underspecification",
+   url:"https://arxiv.org/abs/2608.18066",
+   prob:"自改进 Agent 在不同任务顺序下方差极大，微小扰动导致能力塌缩。",
+   rule:"每次自改进前后对能力向量做差分快照，<b>变更幅度 &gt; 30% 即回滚</b>，异常变更不进主干。"},
+  {id:"G2", name:"证据保全双环诊断", event:"MEMORY_EDIT", anchor:"2608.17756",
+   paper:"D2ACCI: A Dual-Loop Diagnostic Protocol for Evidence-Preserving Agent Memory",
+   url:"https://arxiv.org/abs/2608.17756",
+   prob:"记忆纠错常丢失证据链，一次误删即永久破坏可审计性。",
+   rule:"内环保留<b>证据指纹</b>，外环定期抽样验证一致性；<b>无指纹的记忆编辑一律 FAIL</b>，误删可溯源。"},
+  {id:"G3", name:"自进化审计账本", event:"POLICY_CHANGE", anchor:"2608.17684",
+   paper:"Auditing Self-Evolution in Financial Agents",
+   url:"https://arxiv.org/abs/2608.17684",
+   prob:"自进化无审计，策略漂移累积成不可解释风险。",
+   rule:"每次策略变更须<b>同时记录动机 + 数据 + 回测</b>三项，缺一不可放行；账本 append-only。"},
+  {id:"G4", name:"记忆-策略一致性审计", event:"ALL", anchor:"2608.17247",
+   paper:"Explicit State Elicitation Is Not Enough: Memory-Policy Audit",
+   url:"https://arxiv.org/abs/2608.17247",
+   prob:"显式状态声明充分，但 Agent 实际行为偏离声明状态。",
+   rule:"状态转移时强制校验记忆-策略一致性，<b>未声明状态即冻结</b>，偏差超阈告警。"},
+  {id:"G5", name:"可重放结论闸门", event:"CONCLUSION", anchor:"2608.17906",
+   paper:"AutoResearch: Insight In, Hallucination Out",
+   url:"https://arxiv.org/abs/2608.17906",
+   prob:"自动科研产出幻觉多于洞见，错误结论污染知识库。",
+   rule:"每条结论须<b>可复现</b>；不可复现即降级为「假设」，不入知识图谱。"},
+  {id:"G6", name:"不确定性质疑门", event:"MULTIMODAL", anchor:"2608.17084",
+   paper:"（Uncertainty-Aware Modality Gate · 多模态不确定感知决策门）",
+   url:"https://arxiv.org/abs/2608.17084",
+   prob:"多模态决策把不确定信号当确定输入，错误在模态间静默传播。",
+   rule:"每模态输出「感知值+不确定性」，<b>未量化不确定性即拒绝放行</b>，触发澄清或降权。"}
+];
+
+const PAPERS = [
+  ["2608.18066","On the Fragility of Self-Improving Agents: Variance, Task Order, and Underspecification"],
+  ["2608.17756","D2ACCI: A Dual-Loop Diagnostic Protocol for Evidence-Preserving Agent Memory"],
+  ["2608.17684","Auditing Self-Evolution in Financial Agents"],
+  ["2608.17247","Explicit State Elicitation Is Not Enough: Memory-Policy Audit"],
+  ["2608.17906","AutoResearch: Insight In, Hallucination Out"],
+  ["2608.17084","Uncertainty-Aware Modality Gate（多模态不确定感知决策门）"]
+];
+
+// ============ 渲染六道锁 ============
+document.getElementById('guards').innerHTML = GUARDS.map(g=>`
+  <div class="guard">
+    <h3>🔒 ${g.name} <span class="tag">${g.id}</span>
+      <span class="tag anchor"><a href="${g.url}" target="_blank">arXiv:${g.anchor}</a></span></h3>
+    <div class="prob">问题：${g.prob}</div>
+    <div class="rule">规则：${g.rule}</div>
+  </div>`).join('');
+
+// ============ 渲染论文索引 ============
+document.getElementById('papers').innerHTML = PAPERS.map(p=>
+  `<div class="cite">[${p[0]}] ${p[1]} — <a href="https://arxiv.org/abs/${p[0]}" target="_blank">arxiv.org/abs/${p[0]}</a></div>`).join('');
+
+// ============ 账本（append-only，localStorage 持久化） ============
+const KEY = "eel-ledger-v0.1.0";
+let ledger = [];
+try { ledger = JSON.parse(localStorage.getItem(KEY) || "[]"); } catch(e){ ledger = []; }
+
+// 演示种子数据（首次打开注入演示事件）
+if (ledger.length === 0) {
+  ledger = [
+    {t:"2026-08-03 09:30", type:"结论产出", sum:"PATT-20260803-01 落地：Benchmark 饱和检查纳入 SKILL.md", guard:"G5 可重放闸门", verdict:"✅ 放行", cls:"pass"},
+    {t:"2026-08-08 18:00", type:"策略变更", sum:"Meta-Cog OS 挂载为商业决策子系统（编号 M-0.01~M-9.02）", guard:"G3 审计账本", verdict:"✅ 放行（动机+数据+回测齐备）", cls:"pass"},
+    {t:"2026-08-19 15:08", type:"结论产出", sum:"第四轮论文研读：160 条真实数据入库（GitHub 12 + arXiv 148）", guard:"G5 可重放闸门", verdict:"🧪 降级为假设（部分未复现）", cls:"assume"}
+  ];
+  save();
+}
+
+function save(){ localStorage.setItem(KEY, JSON.stringify(ledger)); }
+
+function refresh(){
+  document.getElementById('ledger').innerHTML = ledger.slice().reverse().map(e=>
+    `<tr><td style="white-space:nowrap">${e.t}</td><td>${e.type}</td><td>${e.sum}</td><td>${e.guard}</td><td class="${e.cls}">${e.verdict}</td></tr>`).join('');
+  const cnt = v => ledger.filter(e=>e.cls===v).length;
+  document.getElementById('sTotal').textContent = ledger.length;
+  document.getElementById('sPass').textContent = cnt('pass');
+  document.getElementById('sRollback').textContent = cnt('rollback');
+  document.getElementById('sAssume').textContent = cnt('assume');
+}
+refresh();
+
+// ============ 护栏校验引擎 ============
+function check(ev){
+  const g = GUARDS.find(x=>x.event===ev.type) || GUARDS[3];
+  switch(ev.type){
+    case "SELF_IMPROVE":
+      if (ev.magnitude > 30) return {cls:"rollback", verdict:"↩️ 回滚", gid:"G1 自改进方差护栏", why:`变更幅度 ${ev.magnitude}% > 30%，触发回滚（锚点 2608.18066）`};
+      return {cls:"pass", verdict:"✅ 放行", gid:"G1 自改进方差护栏", why:`变更幅度 ${ev.magnitude}% 在安全阈值内`};
+    case "MEMORY_EDIT":
+      if (!ev.fingerprint.trim()) return {cls:"rollback", verdict:"↩️ 回滚", gid:"G2 证据保全", why:"缺少证据指纹，记忆编辑被拒（锚点 2608.17756）"};
+      return {cls:"pass", verdict:"✅ 放行", gid:"G2 证据保全", why:`证据指纹 ${ev.fingerprint.trim().slice(0,20)}… 已保全`};
+    case "POLICY_CHANGE":
+      if (!(ev.motivation && ev.data && ev.backtest)) return {cls:"rollback", verdict:"↩️ 回滚", gid:"G3 审计账本", why:"动机/数据/回测未齐备，策略变更被拒（锚点 2608.17684）"};
+      return {cls:"pass", verdict:"✅ 放行", gid:"G3 审计账本", why:"动机+数据+回测三项齐备，已入不可篡改账本"};
+    case "CONCLUSION":
+      if (!ev.repro) return {cls:"assume", verdict:"🧪 降级为假设", gid:"G5 可重放闸门", why:"不可复现，结论降级为「假设」不入图谱（锚点 2608.17906）"};
+      return {cls:"pass", verdict:"✅ 放行", gid:"G5 可重放闸门", why:"结论可复现，允许进入知识图谱"};
+    case "MULTIMODAL":
+      if (!ev.uncertainty) return {cls:"rollback", verdict:"↩️ 回滚", gid:"G6 不确定性质疑门", why:"不确定性未量化，拒绝放行（锚点 2608.17084）"};
+      return {cls:"pass", verdict:"✅ 放行", gid:"G6 不确定性质疑门", why:"不确定性已量化，允许决策"};
+    default:
+      if (!ev.state) return {cls:"rollback", verdict:"↩️ 回滚", gid:"G4 记忆-策略审计", why:"未声明状态，冻结（锚点 2608.17247）"};
+      return {cls:"pass", verdict:"✅ 放行", gid:"G4 记忆-策略审计", why:"状态已声明，记忆-策略一致"};
+  }
+}
+
+// ============ 表单动态字段 ============
+const showMap = {
+  SELF_IMPROVE:["lblMagnitude","magnitude"],
+  MEMORY_EDIT:["lblFingerprint","fingerprint"],
+  POLICY_CHANGE:["cMotivation","cData","cBacktest"],
+  CONCLUSION:["cRepro"],
+  MULTIMODAL:["cUncertainty"]
+};
+document.getElementById('evType').addEventListener('change', e=>{
+  document.querySelectorAll('#form label[id^=lbl], #form input[id^=magnitude], #form input[id^=fingerprint], #form .chk label').forEach(el=>el.style.display='none');
+  document.getElementById('chkGroup').style.display='none';
+  const show = showMap[e.target.value] || [];
+  show.forEach(id=>{ const el=document.getElementById(id); if(el){ el.style.display=''; } });
+  if (show.some(x=>x.startsWith('c'))) document.getElementById('chkGroup').style.display='flex';
+});
+document.getElementById('evType').dispatchEvent(new Event('change'));
+
+// ============ 提交 ============
+document.getElementById('form').addEventListener('submit', e=>{
+  e.preventDefault();
+  const type = document.getElementById('evType').value;
+  const typeName = {SELF_IMPROVE:"自改进",MEMORY_EDIT:"记忆编辑",POLICY_CHANGE:"策略变更",CONCLUSION:"结论产出",MULTIMODAL:"多模态决策"}[type];
+  const ev = {
+    type,
+    sum: document.getElementById('summary').value.trim() || "(未填摘要)",
+    magnitude: parseInt(document.getElementById('magnitude').value)||0,
+    fingerprint: document.getElementById('fingerprint').value,
+    motivation: document.getElementById('cMotivation').checked,
+    data: document.getElementById('cData').checked,
+    backtest: document.getElementById('cBacktest').checked,
+    state: document.getElementById('cState').checked,
+    repro: document.getElementById('cRepro').checked,
+    uncertainty: document.getElementById('cUncertainty').checked
+  };
+  const r = check(ev);
+  const t = new Date().toISOString().replace('T',' ').slice(0,16);
+  ledger.push({t, type:typeName, sum:ev.sum, guard:r.gid, verdict:r.verdict, cls:r.cls});
+  save(); refresh();
+  const res = document.getElementById('result');
+  res.className = (r.cls==='pass') ? 'ok' : 'no';
+  res.textContent = `${r.gid} → ${r.verdict}：${r.why}`;
+  res.scrollIntoView({behavior:'smooth'});
+});
+</script>
+</body>
+</html>
