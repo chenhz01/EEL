@@ -73,6 +73,9 @@ An audit system must first survive being audited itself. These limitations *are*
 
 - **[cognitive-memory-engine](cognitive-memory-engine/)** (中文) — *Spaced Repetition × Decision-Coupling Memory Engine*: a design article plus 40 actionable specs (cog-001~040) from a cognitive-scientist advisor, anchored to 20 arXiv papers. Core claim: spaced repetition should feed the decision system's confidence weights, not just memory consolidation.
 - **[polarization-depolarization-engine](polarization-depolarization-engine/)** (中文) — *Multi-Agent Group Polarization & Depolarization Engine*: GraphWake (2608.17665) memory-mediated polarization cascade turned into a four-layer defense (detect → dampen → immunize → audit) with 12 actionable specs (depol-001~012) distilled from four advisor brainstorms.
+- **[delegation-asymmetry-engine](delegation-asymmetry-engine/)** (中文) — *Delegation Responsibility Asymmetry Engine*: three-dimensional delegation asymmetry (information / goal / capability) from 2608.18058 turned into a four-layer defense (contract → execute → monitor → audit), with 12 specs (deleg-001~012) anchored on an auditable delegation contract.
+- **[versioned-workspace-engine](versioned-workspace-engine/)** (中文) — *Versioned Workspace Engine*: StagedWorkspace (2608.18050) turned into a four-layer versioning mechanism (staging → commit → recovery → collaboration), turning irreversible knowledge-work errors into reversible ones, with 12 specs (vers-001~012).
+- **[capability-collapse-defense](capability-collapse-defense/)** (中文) — *Capability Collapse Defense*: the fragility of self-improving agents (2608.18066) turned into a runtime defense line (detect → isolate → recover → benchmark) that complements EEL's audit ledger, with 12 specs (clps-001~012).
 
 ## License
 
