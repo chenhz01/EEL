@@ -72,6 +72,7 @@ An audit system must first survive being audited itself. These limitations *are*
 ## Also in this repo
 
 - **[cognitive-memory-engine](cognitive-memory-engine/)** (中文) — *Spaced Repetition × Decision-Coupling Memory Engine*: a design article plus 40 actionable specs (cog-001~040) from a cognitive-scientist advisor, anchored to 20 arXiv papers. Core claim: spaced repetition should feed the decision system's confidence weights, not just memory consolidation.
+- **[polarization-depolarization-engine](polarization-depolarization-engine/)** (中文) — *Multi-Agent Group Polarization & Depolarization Engine*: GraphWake (2608.17665) memory-mediated polarization cascade turned into a four-layer defense (detect → dampen → immunize → audit) with 12 actionable specs (depol-001~012) distilled from four advisor brainstorms.
 
 ## License
 
