@@ -69,6 +69,10 @@ An audit system must first survive being audited itself. These limitations *are*
 - [2608.17906] *AutoResearch: Insight In, Hallucination Out* — https://arxiv.org/abs/2608.17906
 - [2608.17084] *Uncertainty-Aware Modality Gate* — https://arxiv.org/abs/2608.17084
 
+## Also in this repo
+
+- **[cognitive-memory-engine](cognitive-memory-engine/)** (中文) — *Spaced Repetition × Decision-Coupling Memory Engine*: a design article plus 40 actionable specs (cog-001~040) from a cognitive-scientist advisor, anchored to 20 arXiv papers. Core claim: spaced repetition should feed the decision system's confidence weights, not just memory consolidation.
+
 ## License
 
 [MIT](LICENSE)
