@@ -1,0 +1,144 @@
+{
+  "meta": {
+    "topic": "版本化工作区引擎（Versioned Workspace Engine）",
+    "primary_anchor": "2608.18050",
+    "secondary_anchors": ["2608.18066", "2608.17756"],
+    "layers": ["暂存层", "提交层", "恢复层", "协作层"],
+    "priority": { "P0": 5, "P1": 6, "P2": 1 },
+    "source_note": "由论文CN-w01-04 深读、系统架构师/安全审计师/产品经理/商业战略顾问脑暴与对比衍生CN-w17-04/w18-01/w18-03/w19-04 提炼"
+  },
+  "specs": [
+    {
+      "id": "vers-001",
+      "name": "写操作默认进暂存区",
+      "layer": "暂存层",
+      "priority": "P0",
+      "problem": "知识工作 Agent 直接改主区，一次误编辑全局污染且无回滚点",
+      "solution": "所有写操作默认落在暂存层，暂存层与主区可 diff；这是论文验证过的最有效单点措施",
+      "source": "论文CN-w01-04 核心结论",
+      "paper_anchor": "2608.18050",
+      "integration": "三层护栏第二层默认策略：仅幂等低风险写可直连主区"
+    },
+    {
+      "id": "vers-002",
+      "name": "覆盖写先出 diff",
+      "layer": "暂存层",
+      "priority": "P0",
+      "problem": "覆盖已有文件不可逆，长链路推理中间出错无法定位污染点",
+      "solution": "任何对已存在文件的覆盖操作先在同目录生成 .staged 版本并输出差异摘要，确认后才替换",
+      "source": "论文CN-w01-04 P0",
+      "paper_anchor": "2608.18050",
+      "integration": "Capsule-ZM-KG 写入网关"
+    },
+    {
+      "id": "vers-003",
+      "name": "费曼式变更说明",
+      "layer": "暂存层",
+      "priority": "P0",
+      "problem": "变更只有代码与元数据，审批人无法在 3 分钟内判断改动影响，C 层审批沦为盖章",
+      "solution": "每个变更自动生成费曼式白话说明（改了什么/为什么/影响谁），讲不清的变更不允许合并",
+      "source": "00-新功能总清单 P0 + 系统架构师-01",
+      "paper_anchor": "2608.18050",
+      "integration": "三层护栏 C 层人工审批"
+    },
+    {
+      "id": "vers-004",
+      "name": "提交带依据元数据",
+      "layer": "提交层",
+      "priority": "P1",
+      "problem": "无来源的产出无法溯源，事后无法回答某条结论来自哪条证据",
+      "solution": "每次提交记录谁写的/依据什么来源/替代了哪一版；无依据的产出不允许升为 published",
+      "source": "论文CN-w01-04 P1",
+      "paper_anchor": "2608.18050",
+      "integration": "六态状态机（草稿→待审→published）"
+    },
+    {
+      "id": "vers-005",
+      "name": "记忆追加+版本链",
+      "layer": "提交层",
+      "priority": "P0",
+      "problem": "就地修改记忆条目会污染原始事实，第 20 次改写后无人知道第 1 版为何这么说",
+      "solution": "记忆写入改为追加新版本并标注取代关系（version/supersedes/origin/written_by 四字段），旧版本降权不删",
+      "source": "论文CN-w01-04 P0",
+      "paper_anchor": "2608.18050",
+      "integration": "OpenViking 记忆 append-only + 版本链"
+    },
+    {
+      "id": "vers-006",
+      "name": "可寻址快照+指纹存证",
+      "layer": "提交层",
+      "priority": "P1",
+      "problem": "审计无法区分哪次改动引入了风险，回滚成本高",
+      "solution": "每次提交生成可寻址快照，快照链不可断，快照指纹存证供逐快照比对",
+      "source": "脑暴-安全审计师第3轮",
+      "paper_anchor": "2608.18050",
+      "integration": "安全审计Agent 快照指纹存证"
+    },
+    {
+      "id": "vers-007",
+      "name": "任意提交点回滚与分叉",
+      "layer": "恢复层",
+      "priority": "P0",
+      "problem": "单文件反复涂改，多个候选方案无法并行比较，方向错误只能全量重做",
+      "solution": "任意提交点可回滚；候选方案在不同分支并行推进，择优原子合并",
+      "source": "论文CN-w01-04 机制三",
+      "paper_anchor": "2608.18050",
+      "integration": "六态状态机（分支态）"
+    },
+    {
+      "id": "vers-008",
+      "name": "断点续作双层恢复",
+      "layer": "恢复层",
+      "priority": "P1",
+      "problem": "长程任务全量重做代价高昂且打断上下文连续性，回滚与恢复被混为一谈",
+      "solution": "回滚管方向错了（整条分支作废），断点续作管执行摔了（局部修复继续），两种触发条件并存为双层恢复",
+      "source": "对比CN-w19-04",
+      "paper_anchor": "2608.18050",
+      "integration": "agency-agents 任务感知检查点（Task-Aware Harness）"
+    },
+    {
+      "id": "vers-009",
+      "name": "不可逆损坏率指标",
+      "layer": "恢复层",
+      "priority": "P2",
+      "problem": "出事的任务直接消失在统计里，质量指标掩盖不可逆损失",
+      "solution": "按周统计发生过内容丢失/需要人工重建的次数，作为系统健康核心指标",
+      "source": "论文CN-w01-04 P2",
+      "paper_anchor": "2608.18050",
+      "integration": "系统健康看板"
+    },
+    {
+      "id": "vers-010",
+      "name": "多子AI并行分片工作区",
+      "layer": "协作层",
+      "priority": "P1",
+      "problem": "30 个子 AI 并行写同一知识库时互相覆盖，隔离退化为各写各的然后合并冲突",
+      "solution": "每个子 AI 写自己的目录/文件名前缀，禁止跨前缀写入，固化为制度",
+      "source": "论文CN-w01-04 P1 + 对比CN-w17-04",
+      "paper_anchor": "2608.18050",
+      "integration": "agency-agents 调度器分片规则"
+    },
+    {
+      "id": "vers-011",
+      "name": "可见性隔离",
+      "layer": "协作层",
+      "priority": "P1",
+      "problem": "子智能体看到不该看的切片就想改，产生跨任务污染",
+      "solution": "子智能体只看到自己需要的工作区切片，避免看到了就想改",
+      "source": "论文CN-w01-04 机制四",
+      "paper_anchor": "2608.18050",
+      "integration": "agency-agents 可见性作用域"
+    },
+    {
+      "id": "vers-012",
+      "name": "决策版本化复习",
+      "layer": "协作层",
+      "priority": "P1",
+      "problem": "战略决策改了找不到为什么改，复盘归罪于人而非还原逻辑",
+      "solution": "每个战略决策存版本快照，按 1/3/7 天回看，留存决策逻辑与替代关系",
+      "source": "脑暴-商业战略顾问第14轮",
+      "paper_anchor": "2608.18050",
+      "integration": "AI Commerce Hub 决策溯源组件"
+    }
+  ]
+}
