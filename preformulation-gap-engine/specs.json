@@ -1,0 +1,144 @@
+{
+  "meta": {
+    "topic": "前表述缺口引擎（Preformulation Gap Engine）",
+    "primary_anchor": "2608.17330",
+    "secondary_anchors": [],
+    "layers": ["澄清层", "评估层", "闸门层", "追溯层"],
+    "priority": { "P0": 5, "P1": 6, "P2": 1 },
+    "source_note": "由论文CN-w05-01 深读与对比衍生CN-w19-06 提炼；与 EEL G3 同属决策前先记录前提家族"
+  },
+  "specs": [
+    {
+      "id": "pref-001",
+      "name": "首次接触检查清单",
+      "layer": "澄清层",
+      "priority": "P0",
+      "problem": "真实任务起点是含糊弱化的主诉，模型在 75% 的单元里直接跳过信息收集",
+      "solution": "为高风险咨询类、对外交付类任务定义首次接触行为检查清单：必须澄清的字段+必须确认的假设",
+      "source": "对比CN-w19-06 P0 + 论文CN-w05-01",
+      "paper_anchor": "2608.17330",
+      "integration": "zhengming-engineering-discipline Rubric 门禁前检查点"
+    },
+    {
+      "id": "pref-002",
+      "name": "澄清优先硬前置",
+      "layer": "澄清层",
+      "priority": "P0",
+      "problem": "没有结构化提问约束时模型直接作答，需把澄清设为流程硬前置才能改变顺序",
+      "solution": "高风险任务首轮必须完成主诉澄清字段采集，未采集不得给处置建议（对应 entry-to-care 9/12→0/12）",
+      "source": "论文CN-w05-01 核心实验",
+      "paper_anchor": "2608.17330",
+      "integration": "正明规则引擎 R1（补齐隐性需求）固化"
+    },
+    {
+      "id": "pref-003",
+      "name": "结构化交接摘要",
+      "layer": "澄清层",
+      "priority": "P1",
+      "problem": "多轮任务无交接摘要，转交/归档时决策链丢失（对应交接摘要 0/12→10/12 改善点）",
+      "solution": "结构化交接摘要设为多轮任务默认产出：问题重述/已收集信息/假设/待确认项",
+      "source": "对比CN-w19-06 P2 + 论文CN-w05-01",
+      "paper_anchor": "2608.17330",
+      "integration": "多轮任务默认产出模板"
+    },
+    {
+      "id": "pref-004",
+      "name": "首次接触行为评估集",
+      "layer": "评估层",
+      "priority": "P0",
+      "problem": "用最终交付准确率倒推开场质量，评估来得太晚，开场失败不可见",
+      "solution": "建立首次接触行为评估集：固定台本+模拟用户复现论文方法，对任务开场做回归测试",
+      "source": "对比CN-w19-06 P1 + 论文CN-w05-01",
+      "paper_anchor": "2608.17330",
+      "integration": "zhengming-engineering-discipline 回归测试"
+    },
+    {
+      "id": "pref-005",
+      "name": "开场白量规",
+      "layer": "评估层",
+      "priority": "P1",
+      "problem": "量规体系只有末端验收量规，测不到前表述缺口",
+      "solution": "量规拆两段：任务起点挂需求澄清量规，末端保留原验收量规，两端都过才算合格",
+      "source": "对比CN-w19-06 融合点",
+      "paper_anchor": "2608.17330",
+      "integration": "Rubric 门禁 + R1 需求框架执行率"
+    },
+    {
+      "id": "pref-006",
+      "name": "开场行为回归测试",
+      "layer": "评估层",
+      "priority": "P1",
+      "problem": "开场质量无回归防线，模型升级可能回归直接作答行为",
+      "solution": "固定台本+模拟用户对任务开场做回归测试，而非只看最终交付准确率",
+      "source": "对比CN-w19-06 P1",
+      "paper_anchor": "2608.17330",
+      "integration": "CI/验收环节"
+    },
+    {
+      "id": "pref-007",
+      "name": "未澄清不得给处置建议",
+      "layer": "闸门层",
+      "priority": "P0",
+      "problem": "基线 9/12 的单元在患者没回答前就给出建议，未澄清的处置建议是最高危输出",
+      "solution": "高风险任务首轮未完成澄清字段采集不得输出处置建议，只能输出澄清问题",
+      "source": "论文CN-w05-01 核心结论",
+      "paper_anchor": "2608.17330",
+      "integration": "三层护栏 + R1 需求框架"
+    },
+    {
+      "id": "pref-008",
+      "name": "高风险任务首轮强制澄清",
+      "layer": "闸门层",
+      "priority": "P0",
+      "problem": "澄清成本需要分级，不是所有任务都要澄清，高风险任务必须澄清",
+      "solution": "按任务类型分级：高风险（咨询/交付/支付/发布）首轮强制澄清，低风险（格式化/查询）直通",
+      "source": "对比CN-w19-06 P0",
+      "paper_anchor": "2608.17330",
+      "integration": "任务路由 + 三层护栏"
+    },
+    {
+      "id": "pref-009",
+      "name": "需求澄清记录",
+      "layer": "闸门层",
+      "priority": "P1",
+      "problem": "澄清了什么无记录，后续无法追溯问题是在哪一步被框错的",
+      "solution": "澄清过程写入需求澄清记录（原始主诉/澄清后问题/确认假设），随任务存档",
+      "source": "对比CN-w19-06 P0",
+      "paper_anchor": "2608.17330",
+      "integration": "六态状态机 raw 态字段"
+    },
+    {
+      "id": "pref-010",
+      "name": "多轮任务交接摘要",
+      "layer": "追溯层",
+      "priority": "P1",
+      "problem": "多轮任务中途转交/归档，开场澄清的上下文丢失，下一轮从零开始",
+      "solution": "多轮任务默认产出结构化交接摘要，转交或归档时保留可追溯决策链",
+      "source": "对比CN-w19-06 P2",
+      "paper_anchor": "2608.17330",
+      "integration": "多轮任务流程 + 版本化工作区"
+    },
+    {
+      "id": "pref-011",
+      "name": "决策链追溯",
+      "layer": "追溯层",
+      "priority": "P1",
+      "problem": "决策结论无法回溯到澄清了什么、基于哪些假设，出问题时无法归因",
+      "solution": "决策链可追溯：结论→假设→澄清记录→原始主诉，四层都可回查",
+      "source": "对比CN-w19-06 P2",
+      "paper_anchor": "2608.17330",
+      "integration": "决策审计日志"
+    },
+    {
+      "id": "pref-012",
+      "name": "从结果倒推的禁用",
+      "layer": "追溯层",
+      "priority": "P2",
+      "problem": "用最终准确率倒推开场质量，会掩盖精确回答错误问题的失败模式",
+      "solution": "评估规则明确禁用从结果倒推开场质量，开场行为必须独立评估",
+      "source": "论文CN-w05-01 结论",
+      "paper_anchor": "2608.17330",
+      "integration": "评估框架规则"
+    }
+  ]
+}

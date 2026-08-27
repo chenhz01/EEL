@@ -1,0 +1,144 @@
+{
+  "meta": {
+    "topic": "偏好自洽性闸门（Preference Consistency Engine）",
+    "primary_anchor": "2608.17644",
+    "secondary_anchors": ["2608.17756", "2608.17744", "2608.18058", "2608.17471"],
+    "layers": ["问法层", "检验层", "闸门层", "裁决层"],
+    "priority": { "P0": 5, "P1": 6, "P2": 1 },
+    "source_note": "由论文CN-w03-02 深读与对比衍生CN-w15-05 / w17-07 / w18-06 / w18-09 / w19-02 提炼；与 EEL G2 差异化（G2 管纵向证据链，本引擎管横向集合一致性，是 D2ACCI 双环之外的第三环）"
+  },
+  "specs": [
+    {
+      "id": "cons-001",
+      "name": "多问法交叉评分",
+      "layer": "问法层",
+      "priority": "P0",
+      "problem": "LLM 偏好是问法建构的——三种问法可给出互相矛盾的评分，单问法点估计掩盖不自洽",
+      "solution": "所有价值评分至少跑三种问法（值多少钱/省多少时间/相比X优先级），报告中位数+方差",
+      "source": "对比CN-w15-05 P0 + 论文CN-w03-02",
+      "paper_anchor": "2608.17644",
+      "integration": "Capsule-ZM-KG 评分字段（value_median/value_var/value_frames）"
+    },
+    {
+      "id": "cons-002",
+      "name": "重述稳定性检验",
+      "layer": "问法层",
+      "priority": "P1",
+      "problem": "同一问题原样重问 LLM 可能给出不同答案，重述漂移是自洽性最低门槛信号",
+      "solution": "同类判断多次重述交叉验证，用重述间方差估计不确定性，方差大→只展示不替选",
+      "source": "对比CN-w17-07 P1",
+      "paper_anchor": "2608.17644",
+      "integration": "三层护栏（偏好推断列为高风险动作）"
+    },
+    {
+      "id": "cons-003",
+      "name": "效用函数拟合检验",
+      "layer": "检验层",
+      "priority": "P0",
+      "problem": "同一批基数偏好判断无法被任何单一效用函数忠实概括，拟合出的效用函数是虚假一致性",
+      "solution": "对一组偏好判断做效用函数拟合残差检验，残差超阈判定不自洽集合，禁止进入效用驱动的自动决策",
+      "source": "论文CN-w03-02 核心实验",
+      "paper_anchor": "2608.17644",
+      "integration": "AI Commerce Hub 分级引擎前置校验"
+    },
+    {
+      "id": "cons-004",
+      "name": "传递性检验",
+      "layer": "检验层",
+      "priority": "P0",
+      "problem": "偏好不自洽的表现之一是传递性破坏：A>B 且 B>C 但 A<C",
+      "solution": "对组内判断两两比较检验传递性，破坏传递性的集合打冲突标记降级为仅供参考",
+      "source": "对比CN-w18-09 P0",
+      "paper_anchor": "2608.17644",
+      "integration": "六态状态机 published 前集合级自洽性检查关卡"
+    },
+    {
+      "id": "cons-005",
+      "name": "无差异点检验",
+      "layer": "检验层",
+      "priority": "P1",
+      "problem": "A、B 两物支付意愿之差不等于让此人对交换二者无差异所需的补偿金，无差异点矛盾是另一种不自洽",
+      "solution": "对基数判断做无差异点检验，发现显著矛盾即标记价值待定",
+      "source": "论文CN-w03-02 实验设计",
+      "paper_anchor": "2608.17644",
+      "integration": "UUMit 定价建议校验"
+    },
+    {
+      "id": "cons-006",
+      "name": "集合级一致性关卡",
+      "layer": "闸门层",
+      "priority": "P0",
+      "problem": "状态机验证粒度是条，但条条正确整体失效是常态，逐条放行无法发现集合级矛盾",
+      "solution": "published 前增加集合级一致性检查为并列关卡，不自洽集合整批降级为仅供参考，不进自动执行链路",
+      "source": "对比CN-w18-09 融合点",
+      "paper_anchor": "2608.17644",
+      "integration": "六态状态机 published 关卡 + EEL G2 之后的第三环"
+    },
+    {
+      "id": "cons-007",
+      "name": "区间报价代替点估计",
+      "layer": "闸门层",
+      "priority": "P0",
+      "problem": "定价建议用点估计自动执行，是把不自洽输入伪装成精确决策",
+      "solution": "定价建议采用区间报价+人类确认而非点估计自动执行，规避效用函数幻象",
+      "source": "对比CN-w17-07 P2 + 对比CN-w19-02 P2",
+      "paper_anchor": "2608.17644",
+      "integration": "UUMit 订阅定价流程 + 商机日报V3"
+    },
+    {
+      "id": "cons-008",
+      "name": "方差超阈值标记",
+      "layer": "闸门层",
+      "priority": "P1",
+      "problem": "多问法方差超阈的评分若仍按正常权重参与排序，会污染下游决策",
+      "solution": "方差超阈值的卡片标记价值待定，不进入高复用推荐池，评分以中位数+方差入库",
+      "source": "对比CN-w15-05 融合点",
+      "paper_anchor": "2608.17644",
+      "integration": "Capsule-ZM-KG 推荐池过滤"
+    },
+    {
+      "id": "cons-009",
+      "name": "商机分级证据类型必填",
+      "layer": "闸门层",
+      "priority": "P1",
+      "problem": "付费意愿若来自 LLM 推演等于把决策建立在自相矛盾的输入上；小样本验证指标波动可能大于真实效应",
+      "solution": "商机分级付费意愿字段必须标注证据来源（真实成交/真实试用/LLM推演），LLM 推演类最高只能定 P2",
+      "source": "对比CN-w19-02 P0 + 对比CN-w11-02",
+      "paper_anchor": "2608.17644",
+      "integration": "AI Commerce Hub 商机分级引擎"
+    },
+    {
+      "id": "cons-010",
+      "name": "后悔率追踪",
+      "layer": "裁决层",
+      "priority": "P1",
+      "problem": "满意度会被推荐结果塑造，不能反映决策质量",
+      "solution": "对已自动执行的决策按周记录事后是否想撤销，替代满意度作为主指标，后悔率上升触发回查",
+      "source": "对比CN-w19-02 P2 + 对比CN-w16-01",
+      "paper_anchor": "2608.17644",
+      "integration": "商机日报V3 周报 + deleg-008"
+    },
+    {
+      "id": "cons-011",
+      "name": "偏好漂移月检",
+      "layer": "裁决层",
+      "priority": "P1",
+      "problem": "偏好可能被问法、推荐结果、记忆级联反向改写，契约锚不住偏好漂移",
+      "solution": "每月对比声明偏好与实际成交分布，持续单向偏离即判定漂移并重置显式契约",
+      "source": "对比CN-w18-05 P0 + 对比CN-w16-01 P1",
+      "paper_anchor": "2608.17644",
+      "integration": "delegation-asymmetry-engine 委托契约 + 异见银行立场审计"
+    },
+    {
+      "id": "cons-012",
+      "name": "外置参照系",
+      "layer": "裁决层",
+      "priority": "P2",
+      "problem": "内部一致性不可得时仅靠自省无法建立标尺——内部无标尺，外部有地图",
+      "solution": "AI 评估 AI 产出必须指明外部参照系（人类方法集/历史决策库/基准任务集），无参照系的自评标记不可信",
+      "source": "对比CN-w18-06 P0 + 论文CN-w04-03",
+      "paper_anchor": "2608.17644",
+      "integration": "zhengming-SkillLens + 六态状态机外置一致性关卡"
+    }
+  ]
+}

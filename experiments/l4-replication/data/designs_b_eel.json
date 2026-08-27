@@ -1,0 +1,80 @@
+{
+  "meta": {
+    "dataset": "B组: EEL 仓库 10 引擎 (正明孵化产线产出)",
+    "source": "EEL 仓库各引擎 README.md / specs.json",
+    "date": "2026-08-24",
+    "note": "四模块拆解基于各引擎 README 核心主张与规格描述"
+  },
+  "designs": [
+    {
+      "name": "cognitive-memory-engine (间隔重复×决策耦合)",
+      "trigger": "记忆复习到期 决策使用记忆 遗忘曲线 调度",
+      "flow": "间隔重复 调度 复习 retrievability 决策加权 置信 结果回写 强化 衰减",
+      "output": "记忆调度决策 置信权重 复习计划",
+      "deps": "记忆库 时间戳 决策系统"
+    },
+    {
+      "name": "polarization-depolarization-engine (群体极化防御)",
+      "trigger": "极化 立场 记忆写入 讨论触发 检测",
+      "flow": "检测 指数 阻尼 回声室 免疫 写入审计 来源配额 传播图 回滚 审计",
+      "output": "极化指数 告警 隔离状态 回滚指令",
+      "deps": "记忆库 监控 阈值 审计日志"
+    },
+    {
+      "name": "delegation-asymmetry-engine (委托责任契约)",
+      "trigger": "委托 授权 契约 边界 风险",
+      "flow": "契约 边界 委托 执行 留痕 监测 后悔率 审计 冷静期 台账 责任",
+      "output": "委托契约 授权记录 透明度条 审计台账",
+      "deps": "文档 审计日志 监控"
+    },
+    {
+      "name": "versioned-workspace-engine (版本化工作区)",
+      "trigger": "版本 提交 回滚 暂存 覆盖写",
+      "flow": "暂存 提交 回滚 分叉 快照 diff 版本链 指纹 断点续作 可见性隔离",
+      "output": "版本 快照 diff 回滚点",
+      "deps": "存储 哈希 文件系统"
+    },
+    {
+      "name": "capability-collapse-defense (能力塌缩防线)",
+      "trigger": "塌缩 分叉 自改进 评估污染 检测",
+      "flow": "检测 双曲线分叉 方差基线 隔离 写保护 双态 恢复 轮级回滚 基准 不可写外部基准",
+      "output": "分叉告警 隔离状态 回滚指令 基准分数",
+      "deps": "监控 阈值 外部基准 审计日志"
+    },
+    {
+      "name": "preference-consistency-engine (偏好自洽闸门)",
+      "trigger": "偏好 评分 问法 价值 自洽性",
+      "flow": "多问法 交叉评分 拟合检验 传递性 无差异点 集合一致性 区间报价 方差标记 人工裁决",
+      "output": "区间报价 自洽判定 方差标记",
+      "deps": "LLM 统计 裁决流程"
+    },
+    {
+      "name": "verification-protocol-engine (验证协议引擎)",
+      "trigger": "验证 成功观测 复制 统计 置信",
+      "flow": "协议 五字段 双指标 噪声地板 种子稳定 控制组 停留期 复现门槛 复制配额 差分归因",
+      "output": "验证协议 置信判定 复制配额",
+      "deps": "统计库 数据 历史记录"
+    },
+    {
+      "name": "innovation-metric-engine (创新度量引擎)",
+      "trigger": "新产出 孵化 差异 新颖度 创新",
+      "flow": "四模块拆解 设计空间映射 差异类型 三选一 重合度 换壳判定 差异报告 存量体检",
+      "output": "差异报告 类型标注 新组合计数",
+      "deps": "目录 参照系 度量规范"
+    },
+    {
+      "name": "living-benchmark-engine (活基准引擎)",
+      "trigger": "结论 过期 时敏 复测 滚动",
+      "flow": "时敏三分类 复测周期 滚动验证 prequential 降级 引用方通知 分流",
+      "output": "时敏标签 降级状态 复测结果",
+      "deps": "数据源 评估器 时间戳"
+    },
+    {
+      "name": "preformulation-gap-engine (前表述缺口引擎)",
+      "trigger": "任务开场 需求 澄清 主诉 模糊",
+      "flow": "首次接触 检查清单 澄清 硬前置 交接摘要 开场评估 闸门 决策链追溯",
+      "output": "澄清记录 交接摘要 放行判定",
+      "deps": "清单模板 流程状态机"
+    }
+  ]
+}

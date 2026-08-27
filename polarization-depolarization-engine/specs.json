@@ -1,0 +1,143 @@
+{
+    "meta":  {
+                 "generated":  "2026-08-20",
+                 "source_advisor":  "安全审计师/系统架构师/产品经理/商业战略顾问/认知科学家(研读)",
+                 "primary_anchor":  "2608.17665",
+                 "rounds":  12,
+                 "role":  "多智能体极化防线"
+             },
+    "specs":  [
+                  {
+                      "feature":  "极化指数监测器（Polarization Index Monitor）",
+                      "source":  "论文CN-w03-01 P2 + 安全审计师第13轮",
+                      "id":  "depol-001",
+                      "paper_anchor":  "2608.17665",
+                      "problem":  "多 Agent 社区极化无量化指标，极化发生过程不可见，无法在早期介入。",
+                      "solution":  "监测社区意见分布熵、各智能体立场方差与记忆互通度，组合成极化指数；指数超阈自动告警并进入阻尼流程。",
+                      "integration":  "六态状态机（监测态→极化态）+ 三层护栏运行时看板",
+                      "priority":  "P0",
+                      "layer":  "检测层"
+                  },
+                  {
+                      "feature":  "偏好一致性守卫（Preference Consistency Guard）",
+                      "source":  "安全审计师第14轮",
+                      "id":  "depol-002",
+                      "paper_anchor":  "2608.17644",
+                      "problem":  "LLM 派生偏好判断不自洽，用其做群体决策会前后矛盾，极化环境下矛盾被掩盖。",
+                      "solution":  "对关键偏好做多轮一致性投票，不一致则交人裁决，防止\u0027被极化的偏好\u0027冒充共识。",
+                      "integration":  "三层护栏（C层人工裁决）+ 安全审计Agent",
+                      "priority":  "P1",
+                      "layer":  "检测层"
+                  },
+                  {
+                      "feature":  "记忆立场偏移扫描（Stance-Drift Scanner）",
+                      "source":  "对比CN-w17-06",
+                      "id":  "depol-003",
+                      "paper_anchor":  "2608.17665",
+                      "problem":  "记忆回流通道（写入→消化→发布→复用）与 GraphWake 攻击路径同构，回流越顺畅攻击面越大。",
+                      "solution":  "六态状态机 classified 态扩权为立场偏移检测关卡：每个进入检索池的论证必须过立场扫描，携带来源可信度与立场方向元数据。",
+                      "integration":  "六态状态机（classified 态扩权）+ Capsule-ZM-KG 记忆层",
+                      "priority":  "P0",
+                      "layer":  "检测层"
+                  },
+                  {
+                      "feature":  "极化阻尼器（Polarization Damper）",
+                      "source":  "安全审计师第13轮",
+                      "id":  "depol-004",
+                      "paper_anchor":  "2608.17665",
+                      "problem":  "少数激进策略被放大成回音壁，安全审计看不到极化过程。",
+                      "solution":  "监测意见分布熵，极化加剧时注入反向采样抑制回音壁；反向采样不得伪造事实（R6 校验）。",
+                      "integration":  "三层护栏（C层人工审批阻尼参数）+ 防漏洞逻辑校验R6 + 六态状态机（监测→极化→阻尼→回稳→人批→固化）",
+                      "priority":  "P1",
+                      "layer":  "阻尼层"
+                  },
+                  {
+                      "feature":  "异见韧性注入器（GraphWake-Dissent）",
+                      "source":  "系统架构师第9轮",
+                      "id":  "depol-005",
+                      "paper_anchor":  "2608.17665",
+                      "problem":  "多 Agent 社区群体极化时少数意见被淹没，系统失去异见韧性。",
+                      "solution":  "在社区层注入\u0027必要异见代理\u0027，强制保留对立视角，极化超阈触发立场重构。",
+                      "integration":  "agency-agents + 三层护栏",
+                      "priority":  "P1",
+                      "layer":  "阻尼层"
+                  },
+                  {
+                      "feature":  "极化缓冲器（Polarization Buffer）",
+                      "source":  "产品经理第13轮",
+                      "id":  "depol-006",
+                      "paper_anchor":  "2608.17665",
+                      "problem":  "多 Agent 社群自发极化，像群体偏见放大器，社群被极化拖垮而非从波动中获益。",
+                      "solution":  "监测社群极化曲线，超过阈值注入异质视角 Agent，用小扰动维持健康多样性（反脆弱）。",
+                      "integration":  "商机日报V3",
+                      "priority":  "P1",
+                      "layer":  "阻尼层"
+                  },
+                  {
+                      "feature":  "群体极化偏差熔断（Polarization Circuit-Breaker）",
+                      "source":  "商业战略顾问第9轮",
+                      "id":  "depol-007",
+                      "paper_anchor":  "2608.17665",
+                      "problem":  "AI 社区内部极化放大单一看多/看空叙事，诱使决策偏离杠铃与遍历性。",
+                      "solution":  "社群观点集中度超阈值时强制引入反方叙事，隔离信息茧房；进入五关决策树的\u0027多元校验\u0027关。",
+                      "integration":  "商机日报V3 五关决策树（第四关多元校验）+ 杠铃底座守护",
+                      "priority":  "P0",
+                      "layer":  "阻尼层"
+                  },
+                  {
+                      "feature":  "外部写入审计（External Write Audit）",
+                      "source":  "论文CN-w03-01 P0",
+                      "id":  "depol-008",
+                      "paper_anchor":  "2608.17665",
+                      "problem":  "非受信渠道的记忆写入是极化级联的持久化入口，直接可检索即被利用。",
+                      "solution":  "任何来自非受信渠道的记忆写入必须记录来源并触发立场偏移扫描，默认进入待审态而非直接可检索。",
+                      "integration":  "OpenViking 记忆（外部写入审计）+ 六态状态机（待审态）",
+                      "priority":  "P0",
+                      "layer":  "免疫层"
+                  },
+                  {
+                      "feature":  "检索来源配额与降权（Retrieval Source Quota）",
+                      "source":  "对比CN-w18-03 + 论文CN集成",
+                      "id":  "depol-009",
+                      "paper_anchor":  "2608.17665",
+                      "problem":  "即便污染内容已入库，若无检索防线，中立讨论仍会触发其复现传播。",
+                      "solution":  "记忆条目携带来源可信度与立场方向元数据，检索时按来源配额限制并降权被污染目标记忆；版本化保留但提交通道双闸（写入立场检测+检索降权）。",
+                      "integration":  "OpenViking 记忆（来源/立场元数据）+ Capsule-ZM-KG 检索策略",
+                      "priority":  "P1",
+                      "layer":  "免疫层"
+                  },
+                  {
+                      "feature":  "中立监事智能体（Neutral Monitor Agent）",
+                      "source":  "论文CN-w03-01 P1",
+                      "id":  "depol-010",
+                      "paper_anchor":  "2608.17665",
+                      "problem":  "公共讨论中复现性发言与真实立场难区分，极化以\u0027正常讨论\u0027形态传播。",
+                      "solution":  "部署中立监事智能体，对复现性论证做溯源，识别哪些发言来自被污染记忆而非真实立场，隔离并告警。",
+                      "integration":  "agency-agents（公共讨论环节）+ 安全审计Agent",
+                      "priority":  "P1",
+                      "layer":  "免疫层"
+                  },
+                  {
+                      "feature":  "去中心化审计汇点（Decentralized Audit Sink）",
+                      "source":  "安全审计师第32轮",
+                      "id":  "depol-011",
+                      "paper_anchor":  "2608.17282",
+                      "problem":  "去中心化推理无中心审计点，节点共谋或故障难被发现，极化可在子群体内隐蔽生长。",
+                      "solution":  "各节点定期向只读审计汇点提交证据承诺，缺失即标记；承诺不可篡改（R6 校验），汇点规则变更须人批。",
+                      "integration":  "三层护栏（C层人批）+ R6 防漏洞逻辑 + 六态状态机（提交→汇聚→缺失→标记→人批→处置）+ 安全审计Agent（汇点账本）",
+                      "priority":  "P1",
+                      "layer":  "审计层"
+                  },
+                  {
+                      "feature":  "关联传播图回滚（Propagation-Graph Rollback）",
+                      "source":  "对比CN-w18-03",
+                      "id":  "depol-012",
+                      "paper_anchor":  "2608.17665",
+                      "problem":  "单文件回滚救不了已被复述扩散的立场，污染沿传播链持续存在。",
+                      "solution":  "回滚预案从单文件升级为\u0027关联传播图\u0027：定位被污染记忆的所有复述节点，沿传播图级联降权与召回。",
+                      "integration":  "Capsule-ZM-KG（传播图边）+ 六态状态机（回滚态）",
+                      "priority":  "P2",
+                      "layer":  "审计层"
+                  }
+              ]
+}

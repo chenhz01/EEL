@@ -1,0 +1,144 @@
+{
+  "meta": {
+    "topic": "活基准引擎（Living Benchmark Engine）",
+    "primary_anchor": "2608.17299",
+    "secondary_anchors": ["2608.17906"],
+    "layers": ["标注层", "复测层", "降级层", "调度层"],
+    "priority": { "P0": 4, "P1": 6, "P2": 2 },
+    "source_note": "由论文CN-w05-03 深读与对比衍生CN-w18-07 提炼；与 EEL G5 差异化（G5 管结论可复现的时点，本引擎管结论可复测的时段）"
+  },
+  "specs": [
+    {
+      "id": "live-001",
+      "name": "时敏性三分类",
+      "layer": "标注层",
+      "priority": "P0",
+      "problem": "知识回流假设越陈越香，但部分知识越陈越毒——漂移后复灌过期分布",
+      "solution": "每条沉淀知识标注时敏性三分类：常青/时敏/过期，由内容来源与领域漂移速度决定",
+      "source": "对比CN-w18-07 P0 + 论文CN-w05-03",
+      "paper_anchor": "2608.17299",
+      "integration": "Capsule-ZM-KG 胶囊 validity 字段"
+    },
+    {
+      "id": "live-002",
+      "name": "失效日期字段",
+      "layer": "标注层",
+      "priority": "P1",
+      "problem": "时敏类知识无失效日期，复测没有触发点，过期无人知",
+      "solution": "时敏类知识强制绑定失效日期与复测时间戳，过期未复测的胶囊在检索侧降权",
+      "source": "对比CN-w18-07 P0",
+      "paper_anchor": "2608.17299",
+      "integration": "Capsule-ZM-KG 检索侧降权"
+    },
+    {
+      "id": "live-003",
+      "name": "prequential 复测例程",
+      "layer": "复测层",
+      "priority": "P0",
+      "problem": "静态榜领先者不一定活得好——快照准确率不能代表连续时间有效性",
+      "solution": "建立按时间顺序（prequential）持续评估的复测例程：历史结论在最新真实数据上重验",
+      "source": "论文CN-w05-03 核心方法（排名剧烈重排）",
+      "paper_anchor": "2608.17299",
+      "integration": "zhengming-evolve-loop 每月抽取历史结论复测"
+    },
+    {
+      "id": "live-004",
+      "name": "结论复测队列",
+      "layer": "复测层",
+      "priority": "P1",
+      "problem": "没有复测队列，复测靠自觉，必然被其他任务挤掉",
+      "solution": "建结论复测队列：每月抽历史结论在最新真实数据上重验，形成固定节奏而非偶发动作",
+      "source": "对比CN-w18-07 P1",
+      "paper_anchor": "2608.17299",
+      "integration": "进化循环每轮抽取部分历史结论做 prequential 复测"
+    },
+    {
+      "id": "live-005",
+      "name": "静态结论占比监控",
+      "layer": "复测层",
+      "priority": "P2",
+      "problem": "常青结论之外的一切均应有失效日期，无日期视为治理债——但占比无人统计",
+      "solution": "把静态结论占比作为知识库健康指标：常青之外的一切均应有时效日期，无日期视为治理债",
+      "source": "对比CN-w18-07 P2",
+      "paper_anchor": "2608.17299",
+      "integration": "系统健康面板"
+    },
+    {
+      "id": "live-006",
+      "name": "过期降级机制",
+      "layer": "降级层",
+      "priority": "P0",
+      "problem": "过期结论若无处置，会继续被下游当作当前事实",
+      "solution": "复测不通过自动降级为历史语境，带时间戳，禁止作为当前事实进入决策链路",
+      "source": "对比CN-w18-07 融合点",
+      "paper_anchor": "2608.17299",
+      "integration": "Capsule-ZM-KG 降级机制 + 六态状态机"
+    },
+    {
+      "id": "live-007",
+      "name": "复测不通过自动降级",
+      "layer": "降级层",
+      "priority": "P1",
+      "problem": "人工确认复测结果不可规模化，需自动处置",
+      "solution": "复测不通过自动降级为历史语境并通知引用方，无需人工逐条确认（重大结论除外）",
+      "source": "论文CN-w05-03 + 对比CN-w18-07",
+      "paper_anchor": "2608.17299",
+      "integration": "Capsule-ZM-KG 状态机"
+    },
+    {
+      "id": "live-008",
+      "name": "引用方通知",
+      "layer": "降级层",
+      "priority": "P1",
+      "problem": "结论降级后，已引用它的流程/文档不知道，错误继续传播",
+      "solution": "失效结论生成过期清单并通知引用方，引用方决策链路自动降权",
+      "source": "对比CN-w18-07 P1",
+      "paper_anchor": "2608.17299",
+      "integration": "商机引擎 + 研读管线引用追踪"
+    },
+    {
+      "id": "live-009",
+      "name": "回流分时敏分流",
+      "layer": "调度层",
+      "priority": "P0",
+      "problem": "Karpathy 循环假设回流知识越陈越香，间隔重复无差别回流会复灌过期分布",
+      "solution": "回流队列按知识时敏性分流：常青类走间隔重复回流，时敏类进活基准式持续复测，拒绝无差别间隔重复",
+      "source": "对比CN-w18-07 融合点",
+      "paper_anchor": "2608.17299",
+      "integration": "Karpathy 循环流水线回流队列"
+    },
+    {
+      "id": "live-010",
+      "name": "常青类间隔重复",
+      "layer": "调度层",
+      "priority": "P1",
+      "problem": "常青知识（原理类）与时敏知识（政策/数据类）需要不同的复习策略",
+      "solution": "常青类继续走间隔重复回流（1/3/7/21 天梯度），不受时敏约束",
+      "source": "cognitive-memory-engine cog-001 联动",
+      "paper_anchor": "2608.17299",
+      "integration": "间隔重复回流调度器"
+    },
+    {
+      "id": "live-011",
+      "name": "时敏类绑定复测周期",
+      "layer": "调度层",
+      "priority": "P1",
+      "problem": "时敏类知识不绑定复测周期，复测就只是口号",
+      "solution": "时敏类知识绑定复测周期（如月度/季度），周期到自动进复测队列",
+      "source": "对比CN-w18-07 P0",
+      "paper_anchor": "2608.17299",
+      "integration": "Capsule-ZM-KG validity 字段 + 复测调度器"
+    },
+    {
+      "id": "live-012",
+      "name": "过期清单",
+      "layer": "调度层",
+      "priority": "P2",
+      "problem": "过期知识散落各处，无汇总视图，治理无抓手",
+      "solution": "生成过期清单周报：本周到期结论、复测结果、降级记录，供周复盘",
+      "source": "对比CN-w18-07 P1",
+      "paper_anchor": "2608.17299",
+      "integration": "每周复盘模板 + 系统健康面板"
+    }
+  ]
+}

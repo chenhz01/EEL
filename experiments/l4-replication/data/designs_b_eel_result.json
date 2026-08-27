@@ -1,0 +1,112 @@
+[
+ {
+  "name": "cognitive-memory-engine (间隔重复×决策耦合)",
+  "kind": "新组合",
+  "best_match": "Spaced Repetition (SRS)",
+  "score": 0.285,
+  "modules": {
+   "trigger": 0.14285714285714285,
+   "flow": 0.2727272727272727,
+   "output": 0.2,
+   "deps": 0.6666666666666666
+  }
+ },
+ {
+  "name": "polarization-depolarization-engine (群体极化防御)",
+  "kind": "新组合",
+  "best_match": "Fault Detection / Circuit Breaker",
+  "score": 0.235,
+  "modules": {
+   "trigger": 0.125,
+   "flow": 0.07142857142857142,
+   "output": 0.5,
+   "deps": 0.5
+  }
+ },
+ {
+  "name": "delegation-asymmetry-engine (委托责任契约)",
+  "kind": "重组",
+  "best_match": "Contract / SLA Framework",
+  "score": 0.459,
+  "modules": {
+   "trigger": 0.8,
+   "flow": 0.45454545454545453,
+   "output": 0.2,
+   "deps": 0.25
+  }
+ },
+ {
+  "name": "versioned-workspace-engine (版本化工作区)",
+  "kind": "精确复刻",
+  "best_match": "Version Control (git-like)",
+  "score": 0.69,
+  "modules": {
+   "trigger": 0.8,
+   "flow": 0.6,
+   "output": 0.75,
+   "deps": 0.6666666666666666
+  }
+ },
+ {
+  "name": "capability-collapse-defense (能力塌缩防线)",
+  "kind": "新组合",
+  "best_match": "Fault Detection / Circuit Breaker",
+  "score": 0.246,
+  "modules": {
+   "trigger": 0.125,
+   "flow": 0.25,
+   "output": 0.2,
+   "deps": 0.5
+  }
+ },
+ {
+  "name": "preference-consistency-engine (偏好自洽闸门)",
+  "kind": "新组合",
+  "best_match": "Chain-of-Thought (CoT)",
+  "score": 0.05,
+  "modules": {
+   "trigger": 0.0,
+   "flow": 0.0,
+   "output": 0.0,
+   "deps": 0.3333333333333333
+  }
+ },
+ {
+  "name": "verification-protocol-engine (验证协议引擎)",
+  "kind": "新组合",
+  "best_match": "Statistical Hypothesis Testing",
+  "score": 0.171,
+  "modules": {
+   "trigger": 0.2857142857142857,
+   "flow": 0.0,
+   "output": 0.0,
+   "deps": 0.6666666666666666
+  }
+ },
+ {
+  "name": "innovation-metric-engine (创新度量引擎)",
+  "kind": "新组合",
+  "best_match": "(无匹配)",
+  "score": 0.0,
+  "modules": {}
+ },
+ {
+  "name": "living-benchmark-engine (活基准引擎)",
+  "kind": "新组合",
+  "best_match": "Time-Series Monitoring / Benchmark",
+  "score": 0.171,
+  "modules": {
+   "trigger": 0.2857142857142857,
+   "flow": 0.0,
+   "output": 0.0,
+   "deps": 0.6666666666666666
+  }
+ },
+ {
+  "name": "preformulation-gap-engine (前表述缺口引擎)",
+  "kind": "新组合",
+  "best_match": "(无匹配)",
+  "score": 0.0,
+  "modules": {}
+ }
+]

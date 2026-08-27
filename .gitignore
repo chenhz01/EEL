@@ -1,0 +1,28 @@
+# ── 本地敏感文件（永不入库）────────────────
+.ssh/
+credentials*
+*.key
+*.pem
+*.pfx
+*.log
+*.env
+.env.*
+*.local
+
+# ── 依赖 / 构建 ───────────────────────────
+node_modules/
+dist/
+build/
+
+# ── 系统 / 编辑器 ─────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# ── 本地交付备份（不进仓库）──────────────
+*.bak
+
+__pycache__/
+*.pyc

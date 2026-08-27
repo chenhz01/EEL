@@ -1,0 +1,94 @@
+{
+  "meta": {
+    "dataset": "C组: 公开 Agent 框架与常见 AI 设计（交叉验证泛化性）",
+    "source": "LangChain / AutoGen / CrewAI 等公开框架官方示例与常见论文设计",
+    "date": "2026-08-24",
+    "note": "用于验证已知空间映射工具对『人类已有设计』的识别能力（阳性对照）"
+  },
+  "designs": [
+    {
+      "name": "LangChain Agent Executor (ReAct 循环)",
+      "trigger": "用户问题 工具调用 推理",
+      "flow": "思考 推理 行动 观察 循环 工具调用 LLM 调用",
+      "output": "动作 工具结果 最终答案",
+      "deps": "LLM 工具 提示模板"
+    },
+    {
+      "name": "AutoGen Conversational Agent",
+      "trigger": "对话 多智能体 消息",
+      "flow": "消息传递 对话 角色 多智能体 轮流 会话",
+      "output": "消息 回复 对话历史",
+      "deps": "LLM 消息总线"
+    },
+    {
+      "name": "RAG Pipeline (标准检索增强)",
+      "trigger": "查询 检索 召回 文档",
+      "flow": "嵌入 向量 检索 召回 排序 top-k 拼接 生成",
+      "output": "检索文档 生成答案",
+      "deps": "向量库 embedding LLM"
+    },
+    {
+      "name": "CoT Prompting (思维链提示)",
+      "trigger": "复杂推理 数学 逐步",
+      "flow": "逐步 推理 分解 中间步骤 示例 提示",
+      "output": "推理链 答案",
+      "deps": "LLM 提示模板"
+    },
+    {
+      "name": "Self-Refine (自我精炼)",
+      "trigger": "生成 改进 反馈 迭代",
+      "flow": "生成 批评 反馈 修改 迭代 自评",
+      "output": "修订输出 批评意见",
+      "deps": "LLM"
+    },
+    {
+      "name": "CrewAI Role-based Team",
+      "trigger": "任务 角色 分工 协作",
+      "flow": "角色 分工 协作 任务分配 流程 执行",
+      "output": "协作结果 任务产出",
+      "deps": "LLM 任务管理器"
+    },
+    {
+      "name": "ReAct with Memory (记忆增强 ReAct)",
+      "trigger": "推理 记忆 检索 工具",
+      "flow": "思考 行动 观察 记忆写入 记忆检索 循环",
+      "output": "动作 记忆条目 答案",
+      "deps": "LLM 记忆库 工具"
+    },
+    {
+      "name": "Self-Consistency Decoding (自洽性采样)",
+      "trigger": "采样 多次 投票 一致性",
+      "flow": "多次采样 生成 投票 多数 汇总 一致性",
+      "output": "多数答案 一致性分数",
+      "deps": "LLM 聚合器"
+    },
+    {
+      "name": "ToT with Critic (带评估的思维树)",
+      "trigger": "探索 分支 评估 搜索",
+      "flow": "分支 搜索 评估 回溯 剪枝 树 深度优先",
+      "output": "最优路径 评估分数",
+      "deps": "LLM 评估器"
+    },
+    {
+      "name": "RLHF Training Loop (人类反馈强化学习)",
+      "trigger": "训练 对齐 奖励 偏好",
+      "flow": "采样 奖励 偏好 训练 更新 迭代 对齐",
+      "output": "策略模型 奖励模型",
+      "deps": "训练框架 人类反馈 GPU"
+    },
+    {
+      "name": "Knowledge Graph QA (知识图谱问答)",
+      "trigger": "查询 知识图谱 实体 关系",
+      "flow": "实体识别 关系抽取 图谱查询 推理 答案生成",
+      "output": "查询结果 答案",
+      "deps": "知识图谱 图数据库 LLM"
+    },
+    {
+      "name": "Few-shot Prompting (少样本提示)",
+      "trigger": "示例 少样本 提示 任务",
+      "flow": "示例构造 提示 生成 参考",
+      "output": "生成输出",
+      "deps": "LLM 示例集"
+    }
+  ]
+}
