@@ -67,7 +67,7 @@ Let's exchange notes on what you're building — the full manuscript goes to ser
 This project is honest about what it is and is not:
 
 1. **The guardrail logic is an *executable expression of rules*, not a faithful reimplementation of the 6 papers.** D2ACCI's full dual-loop protocol, for example, is far more elaborate than one `if`. Treat the anchors as provenance, not as "we shipped the paper."
-2. **The public edition has no hash-chain engine.** The SHA-256 chain implementation exists in the full manuscript (collaborators only). Even there, `localStorage` is a weak guarantee against a determined local adversary — an attacker who rewrites the chain and re-hashes every block produces a "valid-looking" chain. The defense is **external anchoring** (publishing the chain head to git / a notary) per `docs/storage-dual-loop.md`. Server-side signing remains the hard answer.
+2. **The public edition has no hash-chain engine.** The SHA-256 chain implementation exists in the full manuscript (collaborators only). Even there, `localStorage` is a weak guarantee against a determined local adversary — an attacker who rewrites the chain and re-hashes every block produces a "valid-looking" chain. The defense is **external anchoring** (publishing the chain head hash to git / a notary), designed in the full manuscript. Server-side signing remains the hard answer.
 3. **Thresholds (e.g. the 30% variance gate) are heuristic**, not empirically calibrated.
 4. **The design documents (value kernel, consensus, sandbox) are blueprints, not shipped code** — P0 items are flagged in each doc; production deployment requires implementing and validating them.
 
@@ -79,8 +79,8 @@ An audit system must first survive being audited itself. These limitations *are*
 - [ ] **Integration** — hook EEL into a live self-evolving agent's daily loop
 - [ ] **i18n** — English UI (current UI is Chinese)
 - [ ] **Empirical calibration** — run EEL on a real self-improving agent, measure variance / rollback rate, and publish numbers
-- [ ] **External anchoring** — publish chain head hash weekly to git / notary (design in `docs/storage-dual-loop.md`)
-- [ ] **Multi-agent consensus** — implement PBFT+VRF per `docs/consensus-protocol.md` (P0 messaging first)
+- [ ] **External anchoring** — publish chain head hash weekly to git / notary (designed in the full manuscript)
+- [ ] **Multi-agent consensus** — implement PBFT+VRF (P0 messaging first, designed in the full manuscript)
 
 ## Paper anchors
 
