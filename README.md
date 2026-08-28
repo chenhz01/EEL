@@ -51,26 +51,14 @@ Open [`eel.html`](eel.html) in any browser. No build step, no server, no depende
 - **Simulate** — see how each of the six locks rejects bad evolution
 
 > 💡 **The full edition (hash-chain engine) is available to collaborators only.**
-> The complete deliverable — SHA-256 hash-chain engine with tamper detection, dual-loop storage design, value-alignment kernel, consensus protocol, CLI verifier and 17 invariant tests — is **not published here** by design. It is offered to serious collaborators who want to build on it together.
+> The complete deliverable — the working hash-chain engine, verification tooling and invariant test suite — is **not published here** by design. It is offered to serious collaborators who want to build on it together.
 > **Contact for the full manuscript: see "Collaborate" below.**
-
-### v0.2.0 deliverable map (public: blueprint only)
-
-| Area | Public blueprint | Full edition (collaborators) |
-|---|---|---|
-| Block protocol | [`docs/protocol-v1.0.md`](docs/protocol-v1.0.md) — schema & chain rules | — |
-| Hash-chain engine | conceptual (tamper detection described) | **working engine + CLI verifier + 17 invariant tests** |
-| Dual-loop storage | [`docs/storage-dual-loop.md`](docs/storage-dual-loop.md) | — |
-| Value kernel | [`docs/value-alignment-core.md`](docs/value-alignment-core.md) | — |
-| Consensus & notify | [`docs/consensus-protocol.md`](docs/consensus-protocol.md) | — |
-| Recursive sandbox | [`docs/recursive-sandbox.md`](docs/recursive-sandbox.md) | — |
-| Toolchain & formal checks | [`docs/toolchain-roadmap.md`](docs/toolchain-roadmap.md) | **test suite + verifier** |
 
 ## Collaborate
 
 EEL is an open research direction — **the ideas are public, the implementation is the manuscript.** If you are building self-improving-agent governance, AI alignment tooling, or agent audit infrastructure and want the full working edition, reach out:
 
-- **Email:** `zhengming.eel@gmail.com` (replace with actual address before pushing) <!-- CONTACT-PLACEHOLDER -->
+- **Email:** `530416460@qq.com`
 
 Let's exchange notes on what you're building — the full manuscript goes to serious collaborators.
 
