@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EEL · Evolution Evidence Ledger</title>
+<style>
+:root{--bg:#0d1117;--panel:#161b22;--border:#2d3748;--text:#e6edf3;--muted:#8b949e;--gold:#e3b341;--accent:#58a6ff;--green:#3fb950}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;line-height:1.7;max-width:880px;margin:0 auto;padding:40px 16px 60px}
+.kicker{display:inline-block;background:rgba(88,166,255,.12);color:var(--accent);border:1px solid rgba(88,166,255,.3);border-radius:10px;padding:3px 12px;font-size:12px;margin-bottom:14px}
+h1{font-size:30px;margin-bottom:6px}
+h1 .en{color:var(--muted);font-size:14px;font-weight:400}
+.sub{color:var(--muted);font-size:15px;margin-bottom:22px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:16px;transition:.15s}
+.card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.card a{color:var(--text);text-decoration:none}
+.card h3{color:var(--accent);font-size:15px;margin-bottom:6px}
+.card p{color:var(--muted);font-size:13px}
+.badge{display:inline-block;background:rgba(63,185,80,.12);color:var(--green);border:1px solid rgba(63,185,80,.3);border-radius:8px;padding:1px 8px;font-size:11px;margin-left:6px}
+.hero{background:linear-gradient(135deg,rgba(88,166,255,.08),rgba(227,179,65,.06));border:1px solid var(--border);border-radius:12px;padding:20px;margin:18px 0}
+.hero p{font-size:14px;color:var(--text)}
+.gold{color:var(--gold);font-weight:700}
+.foot{margin-top:30px;color:var(--muted);font-size:12px;border-top:1px solid var(--border);padding-top:14px}
+</style>
+</head>
+<body>
+<span class="kicker">Cooperation Edition · GitHub Pages</span>
+<h1>🏛️ EEL <span class="en">Evolution Evidence Ledger</span></h1>
+<div class="sub">零依赖 · 只追加 · 篡改可见 —— 给会自我改规则的 AI 装一个不可篡改的黑匣子</div>
+
+<div class="hero">
+<p>一个 AI 自我改写规则时，最危险的不在犯错，而在<b>犯错后没人知道改了什么、为什么</b>。EEL 把"进化"变成不可篡改的证据：<span class="gold">六锁 G1–G6</span> + <span class="gold">哈希链</span> + <span class="gold">价值内核</span> + <span class="gold">PBFT 共识</span>。L4 实证显示其设计比 AI 自主设计新颖 <span class="gold">12.5×</span>（40% vs 3.2%）。</p>
+</div>
+
+<div class="cards">
+<div class="card"><a href="demo.html"><h3>▶ Live Demo <span class="badge">可交互</span></h3><p>添加进化事件块、篡改演示、整链校验。纯 JS，浏览器直跑。</p></a></div>
+<div class="card"><a href="whitepaper.html"><h3>📄 White Paper</h3><p>英文技术白皮书 v1.0：六锁、哈希链协议、价值内核、候选定律、L4 实证。</p></a></div>
+<div class="card"><a href="onepager.html"><h3>📋 One-Pager</h3><p>中英一页纸：问题 / 方案 / 为什么值 300 万 / 合作条款。</p></a></div>
+<div class="card"><a href="roadmap.html"><h3>🗺️ Roadmap</h3><p>公开演进路线：v1.0 → 候选定律验证 → 治理集成。</p></a></div>
+<div class="card"><a href="concept.html"><h3>🎬 Concept</h3><p>概念演示页：可视化六锁与哈希链如何拦截失控进化。</p></a></div>
+</div>
+
+<div class="foot">
+License: MIT (code) · CC-BY 4.0 (text) ｜ Cooperation edition only — core work-item source & audit internals stay local by design.<br>
+Contact: GitHub Issues on this cooperation repository.
+</div>
+</body>
+</html>

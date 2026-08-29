@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EEL · One-Page Brief</title>
+<style>
+:root{--bg:#0d1117;--panel:#161b22;--border:#2d3748;--text:#e6edf3;--muted:#8b949e;--gold:#e3b341;--accent:#58a6ff;--green:#3fb950}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;line-height:1.7;max-width:960px;margin:0 auto;padding:28px 16px 50px}
+.nav{margin-bottom:22px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.nav a{color:var(--accent);text-decoration:none;margin-right:14px;font-size:13px}
+h1{font-size:22px;margin-bottom:4px}
+.sub{color:var(--muted);font-size:13px;margin-bottom:18px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.col h2{font-size:15px;color:var(--gold);border-bottom:1px solid var(--border);padding-bottom:5px;margin-bottom:10px}
+.col p,.col li{font-size:13.5px;margin:7px 0}
+.col ul{margin-left:18px}
+.good{color:var(--green);font-weight:700}
+.gold{color:var(--gold);font-weight:700}
+.tag{display:inline-block;background:rgba(227,179,65,.12);color:var(--gold);border:1px solid rgba(227,179,65,.3);border-radius:8px;padding:2px 8px;font-size:11px;margin-bottom:8px}
+@media(max-width:680px){.cols{grid-template-columns:1fr}}
+.foot{margin-top:24px;color:var(--muted);font-size:12px;border-top:1px solid var(--border);padding-top:12px}
+</style>
+</head>
+<body>
+<div class="nav"><a href="index.html">← Home</a><a href="demo.html">Live Demo</a><a href="whitepaper.html">White Paper</a><a href="roadmap.html">Roadmap</a><a href="concept.html">Concept</a></div>
+<h1>EEL · One-Page Brief</h1>
+<div class="sub">Evolution Evidence Ledger — 进化证据账本</div>
+<div class="cols">
+<div class="col">
+<span class="tag">中文版</span>
+<p><b>EEL</b> —— AI 自我改进时代的不可变审计层。</p>
+<p><b>问题</b>：会自我改规则的 AI，最危险的不在犯错，而在<b>犯错后没人知道改了什么、为什么改</b>。</p>
+<p><b>方案</b>：零依赖、只追加的审计层，把"进化"变成不可篡改的证据：</p>
+<ul>
+<li><b>六锁 G1–G6</b>：arXiv 结论变成<b>拒绝即拒之门</b>（非提醒）</li>
+<li><b>哈希链</b>：改任一中间块 → 整链校验失败，篡改即刻暴露</li>
+<li><b>价值内核</b>：美好方向量化成 L0/L1/L2 向量 + 硬约束 + 漂移自检</li>
+<li><b>PBFT 共识</b>：多智能体见证签名才入主链</li>
+</ul>
+<p class="gold">为什么值 300 万</b>：唯一把信任/透明/价值/进化熔进单一账本；6 候选定律 + 160 规格 + L4 实证（40% vs 3.2%，12.5×）是可引用、可证伪的科学资产；EU AI Act 推高合规刚需。</p>
+<p><b>合作</b>：开源（MIT/CC-BY）+ 5 年无要求升级条款。联系：GitHub Issues。</p>
+</div>
+<div class="col">
+<span class="tag">English</span>
+<p><b>EEL (Evolution Evidence Ledger)</b> — an immutable audit layer for the self-improving-AI era.</p>
+<p><b>Problem</b>: An AI that rewrites its own rules is most dangerous not when it errs, but when it errs and <i>nobody can tell what changed or why</i>.</p>
+<p><b>Solution</b>: A zero-dependency, append-only audit layer turning evolution into tamper-proof evidence:</p>
+<ul>
+<li><b>Six Guardrails G1–G6</b>: arXiv conclusions become enforceable rejections</li>
+<li><b>Hash-Chain</b>: edit any block → whole-chain verification fails, tampering exposed</li>
+<li><b>Value Kernel</b>: "good direction" as L0/L1/L2 vectors + hard constraints</li>
+<li><b>PBFT Consensus</b>: multi-agent witness signatures required</li>
+</ul>
+<p class="gold">Why $3M</b>: the only ledger unifying trust/transparency/value/evolution; six candidate laws + 160 specs + L4 probe (40% vs 3.2%, 12.5×) are citable, falsifiable science; EU AI Act raises compliance demand.</p>
+<p><b>Deal</b>: Open-source (MIT/CC-BY) + 5-year no-strings upgrade clause. Contact: GitHub Issues.</p>
+</div>
+</div>
+<div class="foot">M3 deliverable · cooperation edition · License: MIT (code) / CC-BY 4.0 (text)</div>
+</body>
+</html>

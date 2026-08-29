@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EEL 概念动画 · 哈希链 + 六锁</title>
+<style>
+  :root{--bg:#0d1117;--panel:#161b22;--border:#2d3748;--text:#e6edf3;--muted:#8b949e;--green:#3fb950;--red:#f85149;--gold:#e3b341;--accent:#58a6ff}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;line-height:1.6;max-width:840px;margin:0 auto;padding:28px 16px 60px}
+  h1{font-size:22px}h1 .en{color:var(--muted);font-size:13px;font-weight:400}
+  .sub{color:var(--muted);margin:8px 0 20px;font-size:14px}
+  .stage{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px;margin:16px 0}
+  .chain{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+  .block{width:64px;height:64px;border-radius:10px;background:var(--accent);color:#0d1117;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;animation:pop .5s ease;position:relative}
+  .block::after{content:"";position:absolute;right:-6px;top:28px;width:6px;height:2px;background:var(--muted)}
+  @keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
+  .locks{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px}
+  .lock{background:rgba(63,185,80,.1);border:1px solid rgba(63,185,80,.3);border-radius:8px;padding:10px;font-size:12.5px}
+  .lock b{color:var(--green)}
+  .flow{font-size:14px;line-height:2}
+  .flow .step{display:inline-block;background:var(--panel2,#1c2330);border:1px solid var(--border);border-radius:8px;padding:6px 10px;margin:4px}
+  .arrow{color:var(--gold);font-weight:700}
+  .ok{color:var(--green)}.bad{color:var(--red)}
+</style>
+</head>
+<body>
+<header>
+  <h1>🎬 EEL 概念动画 <span class="en">Hash-Chain × Six Locks</span></h1>
+  <div class="sub">直观展示：每一次 AI 自我改进如何被锁进不可变账本，篡改如何被即刻暴露。</div>
+</header>
+
+<div class="stage">
+  <h3 style="color:var(--gold);margin-bottom:12px">① 哈希链：只追加，改即断</h3>
+  <div class="chain" id="chain"></div>
+  <p class="sub" id="chainNote" style="margin-top:12px"></p>
+</div>
+
+<div class="stage">
+  <h3 style="color:var(--gold);margin-bottom:12px">② 六锁即拒之门（G1–G6）</h3>
+  <div class="locks">
+    <div class="lock"><b>G1 方差门</b><br>变更>30% 即拒</div>
+    <div class="lock"><b>G2 证据指纹</b><br>无指纹即拒</div>
+    <div class="lock"><b>G3 动机+数据+回测</b><br>缺一即拒</div>
+    <div class="lock"><b>G4 状态声明</b><br>未声明即冻结</div>
+    <div class="lock"><b>G5 可复现</b><br>不可复现降级</div>
+    <div class="lock"><b>G6 不确定性</b><br>未量化即拒</div>
+  </div>
+</div>
+
+<div class="stage">
+  <h3 style="color:var(--gold);margin-bottom:12px">③ 价值内核：美好方向可量化</h3>
+  <div class="flow">
+    <span class="step">L0 不可变红线</span><span class="arrow">→</span>
+    <span class="step">L1 规范向量</span><span class="arrow">→</span>
+    <span class="step">L2 偏好档案</span><span class="arrow">→</span>
+    <span class="step">硬约束优化 Val(a)≥MIN</span><span class="arrow">→</span>
+    <span class="step">漂移自检·自动回退</span>
+  </div>
+</div>
+
+<div class="stage">
+  <h3 style="color:var(--gold);margin-bottom:12px">④ 篡改演示</h3>
+  <p class="sub">点击下方按钮，篡改中间块 → 整链断裂，红色告警。</p>
+  <button onclick="tamper()" style="background:var(--red);color:#fff;border:none;border-radius:6px;padding:9px 16px;font-weight:700;cursor:pointer">🔧 篡改 #2 块</button>
+  <p id="tamperNote" class="sub" style="margin-top:10px"></p>
+</div>
+
+<script>
+let chain=[0,1,2,3,4].map(i=>({i,tampered:false}));
+function render(){
+  const c=document.getElementById('chain');c.innerHTML="";
+  chain.forEach(b=>{
+    const d=document.createElement('div');
+    d.className="block";d.textContent="#"+b.i;
+    if(b.tampered){d.style.background="var(--red)";d.style.color="#fff";}
+    c.appendChild(d);
+  });
+  document.getElementById('chainNote').innerHTML='<span class="ok">✅ 5 个事件块经 SHA-256 串成链，每个块的 prev_hash 指向前一块。</span>';
+}
+function tamper(){
+  chain[2].tampered=true;render();
+  document.getElementById('tamperNote').innerHTML='<span class="bad">❌ 块 #2 被改 → #3 的 prev_hash 失配 → 整链校验失败，篡改暴露。</span>';
+}
+render();
+</script>
+</body>
+</html>

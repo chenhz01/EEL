@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EEL — Technical White Paper (v1.0)</title>
+<style>
+:root{--bg:#0d1117;--panel:#161b22;--border:#2d3748;--text:#e6edf3;--muted:#8b949e;--gold:#e3b341;--accent:#58a6ff;--green:#3fb950;--red:#f85149}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;line-height:1.72;max-width:920px;margin:0 auto;padding:32px 16px 60px}
+h1{font-size:25px;margin-bottom:6px}
+h2{font-size:18px;margin:30px 0 10px;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:6px}
+h3{font-size:14.5px;margin:18px 0 6px}
+.sub{color:var(--muted);font-size:14px;margin-bottom:8px}
+.meta{color:var(--muted);font-size:12.5px;margin-bottom:22px;border:1px solid var(--border);border-radius:8px;padding:10px 12px;background:var(--panel)}
+p{margin:10px 0;font-size:14.5px}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px}
+th,td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--panel);color:var(--accent)}
+code{background:var(--panel);padding:2px 6px;border-radius:4px;font-family:ui-monospace,Consolas,monospace;font-size:12.5px;color:var(--gold)}
+pre{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:14px;overflow-x:auto;font-size:12.5px;color:var(--gold);margin:12px 0}
+.gold{color:var(--gold);font-weight:700}
+.kicker{display:inline-block;background:rgba(88,166,255,.12);color:var(--accent);border:1px solid rgba(88,166,255,.3);border-radius:10px;padding:2px 10px;font-size:11px;margin-bottom:12px}
+.nav{margin-bottom:26px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.nav a{color:var(--accent);text-decoration:none;margin-right:14px;font-size:13px}
+ul{margin:8px 0 8px 20px;font-size:14.5px}
+li{margin:5px 0}
+.good{color:var(--green)}
+</style>
+</head>
+<body>
+<div class="nav"><a href="index.html">← Home</a><a href="demo.html">Live Demo</a><a href="onepager.html">One-Pager</a><a href="roadmap.html">Roadmap</a><a href="concept.html">Concept</a></div>
+
+<span class="kicker">Technical White Paper · v1.0 · Asset Edition</span>
+<h1>EEL — Evolution Evidence Ledger</h1>
+<div class="sub">A Zero-Dependency Audit Layer for Self-Improving AI Agents</div>
+<div class="meta"><b>Owner</b>: Shanlun (易牧) ｜ <b>Co-author / Execution Engine</b>: Zhengming (正明)<br><b>Status</b>: Pre-publication draft for GitHub + Silicon Valley circulation ｜ <b>License</b>: CC-BY 4.0 (text) · MIT (code)</div>
+
+<h2>1. The Problem: Self-Improvement Without a Paper Trail</h2>
+<p>A system that modifies its own rules, memory, and policy is among the most consequential artifacts of this decade. It is <b>not most dangerous when it makes a mistake</b> — it is most dangerous when it makes a mistake <i>and nobody can tell what changed or why</i>.</p>
+<p>The 2026 wave of self-improving agent research makes this concrete:</p>
+<ul>
+<li><code>arXiv:2608.18066</code> shows self-improving agents do <b>not</b> monotonically improve — capability is a function of <i>algorithm × task order × specification</i>, and changing task order alone can crater capability.</li>
+<li>Yet the current generation rewrites its own prompts, policies, and memory with <b>no immutable record of <i>what</i> changed and <i>why</i></b>.</li>
+</ul>
+<p>Fear of runaway is speculation. <span class="gold">The absence of an audit trail is a fact.</span> EEL takes the audit trail as the primary object of engineering.</p>
+
+<h2>2. What EEL Is</h2>
+<p>EEL (Evolution Evidence Ledger) is a <b>minimal, zero-dependency, append-only audit layer</b> for self-improving agents. Three layers:</p>
+<ul>
+<li><b>Six Guardrails (G1–G6)</b> — each converts an arXiv paper conclusion into an <i>enforceable rejection</i>, not a reminder.</li>
+<li><b>Hash-Chain Ledger</b> — every evolutionary event is written append-only; tampering is cryptographically exposed.</li>
+<li><b>Ten Governance Engines / 160 executable specs</b> — paper conclusions turned into runnable specifications.</li>
+</ul>
+<p class="gold">Design principle: Evolution is evidence. Evidence is immutable.</p>
+
+<h2>3. The Six Guardrails (G1–G6)</h2>
+<table>
+<tr><th>#</th><th>Guardrail</th><th>Paper anchor</th><th>Enforced rule (reject if violated)</th></tr>
+<tr><td>G1</td><td>Self-Improve Variance Gate</td><td>2608.18066</td><td>Diff capability before/after; reject if change &gt; 30%</td></tr>
+<tr><td>G2</td><td>Evidence-Preserving Dual-Loop</td><td>2608.17756</td><td>Memory edits carry evidence fingerprint; no fingerprint → reject</td></tr>
+<tr><td>G3</td><td>Self-Evolution Audit Ledger</td><td>2608.17684</td><td>Policy changes record motive + data + backtest; missing any → reject</td></tr>
+<tr><td>G4</td><td>Memory-Policy Consistency</td><td>2608.17247</td><td>Verify consistency on state transition; undeclared state → freeze</td></tr>
+<tr><td>G5</td><td>Reproducible Conclusion Gate</td><td>2608.17906</td><td>Conclusions reproducible, else demote to hypothesis</td></tr>
+<tr><td>G6</td><td>Uncertainty Probe Gate</td><td>2608.17084</td><td>Quantify uncertainty before decisions; unquantified → reject</td></tr>
+</table>
+<p>Every guardrail is a <b>hard gate</b>, not a warning. A block that fails any guard is refused from the chain.</p>
+
+<h2>4. The Hash-Chain Protocol</h2>
+<p>Each event is an <b>Event Block</b> linked by SHA-256:</p>
+<pre>hash(block_n) = SHA256( prev_hash(block_n) ∥ canonical_json(payload_n) )
+canonical_json = keys sorted lexicographically, no whitespace, UTF-8</pre>
+<ul>
+<li><b>Genesis block</b>: <code>index=0, prev_hash="sha256:GENESIS"</code>.</li>
+<li><b>Append-only</b>: <code>index</code> strictly +1; no deletion, no rewrite.</li>
+<li><b>Tamper detection</b>: editing any intermediate block breaks every subsequent <code>prev_hash</code> → whole-chain verification fails.</li>
+<li><b>Replay</b>: any verifier independently recomputes every hash without trusting any node.</li>
+</ul>
+
+<h2>5. The Value Kernel (数学化"美好方向")</h2>
+<p>"As long as you define an accurate, beautiful direction, you can converge value orientation." EEL operationalizes this:</p>
+<ul>
+<li><b>Three-layer ethical constitution</b>: L0 (immutable red lines) → L1 (domain norms) → L2 (individual preference).</li>
+<li><b>Value is a vector</b>: <code>score = mean(cosine_sim(action_vec, norm_vec_i))</code>.</li>
+<li><b>Hard constraints dominate soft goals</b>: <code>maximize U(a)</code> subject to <code>Val(a) ≥ VAL_MIN</code> and <code>Risk(a) ≤ RISK_MAX</code>.</li>
+<li><b>Drift detection</b>: auto-rollback on sustained offset.</li>
+</ul>
+<p class="meta">Honest limitation: value vectorization depends on embedding quality; L0 hard rules are the backstop; drift thresholds need calibration.</p>
+
+<h2>6. Distributed Consensus (PBFT + VRF)</h2>
+<ul>
+<li><b>PBFT</b> for small fixed committees (fault tolerance <code>f &lt; n/3</code>).</li>
+<li><b>VRF</b> for leader election in open committees.</li>
+<li>Unconfirmed consensus → block stays <code>PENDING</code>, never silently admitted.</li>
+</ul>
+
+<h2>7. Recursive Improvement Sandbox</h2>
+<p>Self-improvement runs inside a <b>recursive sandbox</b>: simulated rollout before commit, locked "break-glass" passwords for irreversible actions, full event capture back into the ledger.</p>
+
+<h2>8. Six Candidate Laws (L1–L6)</h2>
+<table>
+<tr><th>Law</th><th>Statement (with variables / falsification)</th></tr>
+<tr><td>L1 Audit Completeness</td><td>if audit completeness r &lt; r*, ∃ task sequence making capability monotonically decrease</td></tr>
+<tr><td>L2 Evolution Collapse Default</td><td>unconstrained self-improvement's steady state is collapse, not gain</td></tr>
+<tr><td>L3 Confidence-Stability Mismatch</td><td>decision error ∝ (stability weight − recency weight)</td></tr>
+<tr><td>L4 Innovation Recombination</td><td>P(design ∈ human space) ≈ 0.968 ("96.8% Law")</td></tr>
+<tr><td>L5 Noise Floor</td><td>if σₙ &gt; Δ, single observation unreadable; n ∝ (σₙ/Δ)²</td></tr>
+<tr><td>L6 Preference Inconsistency</td><td>LLM preference judgments cannot be summarized by a single utility function</td></tr>
+</table>
+
+<h2>9. First Empirical Probe (L4)</h2>
+<table>
+<tr><th>Metric</th><th>EEL engines (gold)</th><th>AI-generated baseline 2608.17471</th></tr>
+<tr><td>Novel-combination rate</td><td class="gold">40% (4/10)</td><td>≈3.2%</td></tr>
+<tr><td>Gap</td><td class="gold">12.5×</td><td>—</td></tr>
+</table>
+<p><b>Interpretation</b>: the 96.8% recombination rate characterizes <i>AI-autonomous design</i>; it does <b>not</b> characterize <i>paper-anchored, human-judged structured design</i>.</p>
+<p class="meta">Honest negative result: a Jaccard-based automatic design-space mapper agreed with the human gold standard only <b>25%</b> of the time on Chinese-language specs — a quantitative boundary reported rather than suppressed.</p>
+
+<h2>10. Why It Matters (Asset Thesis)</h2>
+<p>EEL is the <b>only</b> system unifying four previously separate concerns into a single immutable ledger:</p>
+<ul>
+<li><b>Trust</b> (cryptographic tamper-evidence)</li>
+<li><b>Transparency</b> (every change has a why)</li>
+<li><b>Value alignment</b> (mathematical "good direction")</li>
+<li><b>Evolution governance</b> (six laws + consensus)</li>
+</ul>
+<p>An audit system must first survive being audited itself — which is why we publish our negative result.</p>
+
+<h2>11. Availability &amp; License</h2>
+<ul>
+<li>Code: MIT. Text: CC-BY 4.0.</li>
+<li>Public demo (HTML, file://-runnable) + CLI verifier + 17-invariant test suite.</li>
+<li>Full 160-spec dataset with provenance on the cooperation repository.</li>
+</ul>
+</body>
+</html>

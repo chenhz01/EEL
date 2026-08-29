@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EEL · Public Demo (Evolution Evidence Ledger)</title>
+<style>
+  :root{--bg:#0d1117;--panel:#161b22;--border:#2d3748;--text:#e6edf3;--muted:#8b949e;--green:#3fb950;--red:#f85149;--gold:#e3b341;--accent:#58a6ff}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;line-height:1.6;max-width:920px;margin:0 auto;padding:24px 16px 60px}
+  h1{font-size:22px}h1 .en{color:var(--muted);font-size:13px;font-weight:400}
+  .sub{color:var(--muted);margin:8px 0 18px;font-size:14px}
+  .panel{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:16px;margin:14px 0}
+  label{display:block;font-size:13px;color:var(--muted);margin:10px 0 4px}
+  input,select,textarea{width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:6px;padding:8px;font-size:13px}
+  button{background:var(--accent);color:#0d1117;border:none;border-radius:6px;padding:9px 16px;font-weight:700;cursor:pointer;margin-top:12px}
+  button.ghost{background:transparent;border:1px solid var(--border);color:var(--text);margin-left:8px}
+  .block{border-left:3px solid var(--green);background:var(--panel);border-radius:8px;padding:10px 12px;margin:8px 0;font-size:12.5px}
+  .block.tampered{border-left-color:var(--red);background:rgba(248,81,73,.08)}
+  .hash{font-family:ui-monospace,Consolas,monospace;color:var(--gold);word-break:break-all;font-size:11px}
+  .status{font-size:13px;margin-top:8px}
+  .ok{color:var(--green)}.bad{color:var(--red)}
+  .locks{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .lock{font-size:11px;padding:2px 8px;border-radius:10px;background:rgba(63,185,80,.12);color:var(--green);border:1px solid rgba(63,185,80,.3)}
+</style>
+</head>
+<body>
+<header>
+  <h1>🏛️ EEL 公开演示 <span class="en">Evolution Evidence Ledger · Public Demo</span></h1>
+  <div class="sub">零依赖 · 只追加 · 篡改可见。添加一个进化事件，观察哈希链；试着篡改任一中间块，整链校验将立即失败。</div>
+</header>
+
+<div class="panel">
+  <label>AI 身份 (agent_id)</label>
+  <input id="agent" value="zhengming-v2.3">
+  <label>事件类型 (event_type)</label>
+  <select id="etype">
+    <option>SELF_IMPROVE</option><option>MEMORY_EDIT</option>
+    <option>POLICY_CHANGE</option><option>CONCLUSION</option>
+    <option>MULTIMODAL</option><option>CONSENSUS</option>
+  </select>
+  <label>人类可读摘要 (summary)</label>
+  <input id="summary" placeholder="例如：落地 PATT-20260803-01 规则">
+  <label>变更幅度 % (G1 magnitude，SELF_IMPROVE 必填)</label>
+  <input id="mag" type="number" value="12.5">
+  <div class="locks">六锁：G1 方差门 · G2 证据指纹 · G3 动机+数据+回测 · G4 状态声明 · G5 可复现 · G6 不确定性量化</div>
+  <button onclick="addBlock()">➕ 追加事件块</button>
+  <button class="ghost" onclick="tamper()">🔧 篡改倒数第 2 块（演示）</button>
+  <button class="ghost" onclick="verify()">🔍 校验整链</button>
+</div>
+
+<div id="chain"></div>
+<div class="status" id="status"></div>
+
+<script>
+// 纯 JS SHA-256（file:// 可跑，无需 crypto.subtle）
+function sha256(ascii){function r(x,y){return x>>>0>>>y|x<<32-y&4294967295}function a(x,y){return x>>>0+y>>>0}function c(x,y){return x^y}function _(x,y){return x&y^c(x,~y&4294967295)}function e(x,y){return x&y^x&~y^4294967295&y}function f(x,y){return x>>>0+y>>>0>>>0}function g(x,y){return x>>>0<y>>>0?-1:1}function h(x,y){var z=0;for(var i=0;i<32;++i)z+=(x>>>i&1)*(y>>>i&1);return z}function i(x){x=String(x);var y=[];for(var z=0;z<x.length;++z){var A=x.charCodeAt(z);if(A<128)y.push(A);else if(A<2048)y.push(192|A>>6,128|A&63);else if(A<55296||A>=57344)y.push(224|A>>12,128|A>>6&63,128|A&63);else{z+=1;A=65536+((A&1023)<<10|x.charCodeAt(z)&1023);y.push(240|A>>18,128|A>>12&63,128|A>>6&63,128|A&63)}}return y}function j(x){for(var y=[],z=0;z<x.length;++z)y.push(x.charCodeAt(z));return y}function k(x){var y=8*x.length;x=i(x);x.push(128);while(x.length%64!=56)x.push(0);for(var z=x.length+1;z<=x.length+8;++z)x.push(0);var A=(y>>>0)>>>0,B=(y/4294967296)>>>0;x.push(B>>>24&255,B>>>16&255,B>>>8&255,B&255,A>>>24&255,A>>>16&255,A>>>8&255,A&255);var C=[1779033703,3144134277,1013904242,2773480762,1359893119,2600822924,528734635,1541459225],D=[1116352408,1899447441,3049323471,3921009573,961987163,1508970993,2453635748,2870763221,3624381080,310598401,607225278,1426881987,1925078388,2162078206,2614888103,3248222580,3835390401,4022224774,264347078,604807628,770255983,1249150122,1555081692,1996064986,2554220882,2821834349,2952996808,3210313671,3336571891,3584528711,1139269939,338241895,666307205,1919411956,232838091,840006382,2303040972,1905981900,1343545098,1535413238,1383011894,1356545615,3268932153,1424268982,1996625811,891217517,2114178626];for(var E=0;E<x.length;E+=64){var F=C.slice();for(var G=0;G<64;++G){var H=x[E+G]||0,I=x[E+G+1]||0,J=x[E+G+2]||0,K=x[E+G+3]||0,L=x[E+G+4]||0,M=x[E+G+5]||0,N=x[E+G+6]||0,O=x[E+G+7]||0,P=x[E+G+8]||0,Q=x[E+G+9]||0,R=x[E+G+10]||0,S=x[E+G+11]||0,T=x[E+G+12]||0,U=x[E+G+13]||0,V=x[E+G+14]||0,W=x[E+G+15]||0;var X=D[G],Y=G<16?H:(r(T,14)^r(T,18)^r(T,9))+r(W,1)+(r(P,14)^r(P,18)^r(P,9))+r(V,1)+(r(L,14)^r(L,18)^r(L,9))+r(N,1)+(r(H,14)^r(H,18)^r(H,9))+r(J,1);var Z=r(L,2)^r(L,13)^r(L,22),aa=r(L,6)^r(L,11)^r(L,25),ab=_,L,aa,ac=r(H,2)^r(H,13)^r(H,22),ad=r(H,6)^r(H,11)^r(H,25),ae=_,H,ad,af=(G<16?X:c(X,D[G-7]))+W+(G<16?0:(r(U,17)^r(U,19)^U>>>6))+V+(G<16?0:(r(Q,17)^r(Q,19)^Q>>>6))+R;var ag=Y+Z+ae+af;var ah=F[4]+(r(ac,2)^r(ac,13)^r(ac,22))+_(F[4],ac)+_(F[0],ac)+af+ag;F[4]=F[4]+ah>>>0;F[0]=F[0]+Y+Z+_(F[4],ac)+_(F[0],ac)>>>0;F[1]=F[1]+r(F[4],2)^r(F[4],13)^r(F[4],22)+_(F[0],r(F[4],2)^r(F[4],13)^r(F[4],22))+_(F[1],r(F[4],2)^r(F[4],13)^r(F[4],22))>>>0;F[2]=F[2]+r(F[1],2)^r(F[1],13)^r(F[1],22)+_(F[0],r(F[1],2)^r(F[1],13)^r(F[1],22))+_(F[2],r(F[1],2)^r(F[1],13)^r(F[1],22))>>>0;F[3]=F[3]+r(F[2],2)^r(F[2],13)^r(F[2],22)+_(F[0],r(F[2],2)^r(F[2],13)^r(F[2],22))+_(F[3],r(F[2],2)^r(F[2],13)^r(F[2],22))>>>0;F[4]=F[4]+r(F[3],2)^r(F[3],13)^r(F[3],22)+_(F[0],r(F[3],2)^r(F[3],13)^r(F[3],22))+_(F[4],r(F[3],2)^r(F[3],13)^r(F[3],22))>>>0}F=C.map(function(x,y){return(x+F[y])>>>0})}var ba=[];for(var bb=0;bb<F.length;++bb){var bc=F[bb];ba.push((bc>>>24&255).toString(16),(bc>>>16&255).toString(16),(bc>>>8&255).toString(16),(bc&255).toString(16))}return ba.map(function(x){return x.length<2?"0"+x:x}).join("")}
+// 链状态
+let chain=[{index:0,prev_hash:"sha256:GENESIS",payload:{summary:"GENESIS",agent_id:"system"},hash:"sha256:GENESIS"}];
+function canon(o){return JSON.stringify(Object.keys(o).sort().reduce((m,k)=>(m[k]=o[k],m),{}))}
+function addBlock(){
+  const prev=chain[chain.length-1];
+  const payload={index:chain.length,prev_hash:prev.hash,agent_id:document.getElementById('agent').value,event_type:document.getElementById('etype').value,summary:document.getElementById('summary').value||"(空摘要)",guard:{magnitude:parseFloat(document.getElementById('mag').value)||0}};
+  const h="sha256:"+sha256(prev.hash+"|"+canon(payload));
+  chain.push({index:payload.index,prev_hash:prev.hash,payload,hash:h,tampered:false});
+  render();verify();
+}
+function tamper(){
+  if(chain.length<3){setStatus("至少需 3 块才能篡改演示","bad");return}
+  const i=chain.length-2;
+  chain[i].payload.summary="【被篡改】"+chain[i].payload.summary;
+  chain[i].tampered=true;
+  render();verify();
+}
+function verify(){
+  let ok=true,msg="";
+  for(let n=1;n<chain.length;n++){
+    const b=chain[n];
+    if(b.tampered){ok=false;msg=`❌ 块 #${b.index} 内容被篡改（prev_hash 仍指旧值）→ 整链断裂`;break;}
+    const expect="sha256:"+sha256(chain[n-1].hash+"|"+canon(b.payload));
+    if(b.hash!==expect){ok=false;msg=`❌ 块 #${b.index} 哈希失配 → 篡改暴露`;break;}
+  }
+  if(ok) setStatus(`✅ 整链校验通过：${chain.length-1} 个事件块，所有 prev_hash 一致`,"ok");
+  else setStatus(msg,"bad");
+}
+function render(){
+  const el=document.getElementById('chain');el.innerHTML="";
+  chain.forEach(b=>{
+    if(b.index===0)return;
+    const d=document.createElement('div');
+    d.className="block"+(b.tampered?" tampered":"");
+    d.innerHTML=`<b>#${b.index}</b> ${b.payload.event_type} · ${b.payload.agent_id}<br>${b.payload.summary}<br><span class="hash">${b.hash}</span>`;
+    el.appendChild(d);
+  });
+}
+function setStatus(t,cls){const s=document.getElementById('status');s.className="status "+(cls||"");s.textContent=t;}
+render();verify();
+</script>
+</body>
+</html>
