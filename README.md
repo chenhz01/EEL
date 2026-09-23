@@ -1,3 +1,21 @@
+# EEL
+
+> **Prove your self-improving agent actually improved — tamper-evident ledger**
+
+
+
+## Install (one line)
+```bash
+见仓内说明
+```
+
+## Why not X?
+（见下方原文档）
+
+Topics: `ai-agents` · `auditability` · `hash-chain` · `ledger` · `self-improving`
+
+---
+
 ﻿# EEL — Evolution Evidence Ledger：为自进化 AI 造不可篡改的进化账本
 
 > 求合作脱敏版 · License: CC BY-NC-ND 4.0（禁止商用演绎）
